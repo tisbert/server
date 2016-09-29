@@ -1,4 +1,4 @@
-### Preparar CentOS
+### Paso 1 - Preparar CentOS
 
     cd /root
     yum -y -q install git
@@ -8,7 +8,7 @@
     ./autoinstall.sh
     
 
-### Install composer
+### Paso 2 - Install composer
     mkdir /usr/share/composer
     cd /usr/share/composer
     php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
