@@ -24,7 +24,8 @@
     php composer.phar install
     
 ### Extras - Librerías de composer
-    composer require zendframework/zendframework
-    composer require zendframework/zend-mvc
+    cd /usr/share/composer
+    php composer.phar require zendframework/zendframework
+    php composer.phar require zendframework/zend-mvc
     
     
