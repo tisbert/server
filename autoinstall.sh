@@ -67,5 +67,5 @@ mv composer.phar /usr/local/bin/composer/
 cd /usr/local/bin/composer/
 touch composer.json
 echo "{}" >> composer.json
-composer install
+php composer.phar install
 echo "Instalación finalizada"
