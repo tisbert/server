@@ -48,5 +48,6 @@ pear install Auth_SASL
 pear install Net_SMTP-1.7.2
 pear install Net_IDNA2-0.1.1
 pear install Mail_Mime-1.10.0
+pear install Mail-1.3.0
 pear install Net_URL2-2.2.1
 pear install HTTP_Request2
