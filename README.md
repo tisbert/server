@@ -1,3 +1,6 @@
+### Opcional - pre-VirtualBox Guest Additions
+    yum -y install dkms
+
 ### Paso 1 - Preparar CentOS
 
     cd /root
