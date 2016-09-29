@@ -20,3 +20,8 @@
     echo "{}" >> composer.json
     php composer.phar install
     
+### Extras - Librerías de composer
+    composer require zendframework/zendframework
+    composer require zendframework/zend-mvc
+    
+    
