@@ -11,7 +11,8 @@
     ./autoinstall.sh
     
 
-### Paso 2 - Install composer
+### Paso 2 - Instalación -> composer
+
     mkdir /usr/share/composer
     cd /usr/share/composer
     php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
@@ -23,13 +24,16 @@
     echo "{}" >> composer.json
     php composer.phar install
     
+### Paso 3 - Instalación -> YetiForce
+
+    cd /var/www/html/
+    git clone -b developer https://github.com/YetiForceCompany/YetiForceCRM.git
+    sudo chown -hR apache:apache .
+    
+
 ### Extras - Librerías de composer
+
     cd /usr/share/composer
     php composer.phar require zendframework/zendframework
     php composer.phar require zendframework/zend-mvc
     
-    
-### Instalación - YetiForce
-    cd /var/www/html/
-    git clone -b developer https://github.com/YetiForceCompany/YetiForceCRM.git
-    sudo chown -hR apache:apache .
