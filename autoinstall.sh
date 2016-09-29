@@ -56,4 +56,13 @@ pear install Mail_Mime-1.10.0
 pear install Mail-1.3.0
 pear install Net_URL2-2.2.1
 pear install HTTP_Request2
+#Quitar pagina de bienvenida
+cd /etc/httpd/conf.d/welcome.conf
+rm -Rf ius-release.rpm
+touch welcome.conf
+echo "#" >> welcome.conf
+#Configuracion de PHP
+mv -f php.ini /etc/
+#Configuracion de MySQL
+mv -f my.cnf /etc/
 echo "Instalación finalizada"
