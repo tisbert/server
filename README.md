@@ -29,3 +29,7 @@
     php composer.phar require zendframework/zend-mvc
     
     
+### Instalación - YetiForce
+    cd /var/www/html/
+    git clone -b developer https://github.com/YetiForceCompany/YetiForceCRM.git
+    sudo chown -hR apache:apache .
