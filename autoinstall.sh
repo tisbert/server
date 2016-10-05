@@ -30,6 +30,7 @@ firewall-cmd --permanent --add-port=443/tcp
 firewall-cmd --permanent --add-service https
 firewall-cmd --permanent --add-port=21/tcp
 firewall-cmd --permanent --add-service=ftp
+firewall-cmd --permanent --add-port=10000/tcp
 systemctl restart firewalld.service
 #Install MySQL
 yum -q -y install mariadb-server mariadb mariadb-libs
