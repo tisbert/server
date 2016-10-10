@@ -40,6 +40,7 @@ sudo systemctl start httpd.service
 sudo systemctl enable httpd.service
 
 #Configurando https (pendiente)
+# https://www.digitalocean.com/community/tutorials/how-to-set-up-apache-virtual-hosts-on-centos-7
 # https://wiki.centos.org/es/HowTos/Https
 
 #Abrir puertos del firewalld
