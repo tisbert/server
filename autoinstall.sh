@@ -1,16 +1,15 @@
-SELINUXCONFIGFILE='/etc/selinux/config'
+setsebool -P httpd_can_network_connect 1
+setsebool -P httpd_can_network_connect_db 1
+semanage fcontext -a -t httpd_sys_rw_content_t 'csrf-magic'
+restorecon -v 'csrf-magic'
+setsebool -P httpd_unified 1
+setsebool -P polyinstantiation_enabled 1
 
+SELINUXCONFIGFILE='/etc/selinux/config'
 sudo sed -i 's/SELINUX=enforcing/SELINUX=disabled/g' $SELINUXCONFIGFILE
 sudo sed -i 's/SELINUX=permissive/SELINUX=disabled/g' $SELINUXCONFIGFILE
 sudo setenforce 0
 sudo cat $SELINUXCONFIGFILE | grep '^SELINUX='
-
-#setsebool -P httpd_can_network_connect 1
-#setsebool -P httpd_can_network_connect_db 1
-#semanage fcontext -a -t httpd_sys_rw_content_t 'csrf-magic'
-#restorecon -v 'csrf-magic'
-#setsebool -P httpd_unified 1
-#setsebool -P polyinstantiation_enabled 1
 
 #Install IUS y EPEL
 sudo yum clean all
