@@ -14,7 +14,7 @@ sudo cat $SELINUXCONFIGFILE | grep '^SELINUX='
 
 #Install IUS y EPEL
 sudo yum clean all
-sudo yum -y install epel-release pwgen git touch 
+sudo yum -y install epel-release pwgen git touch mod_ssl openssl
 sudo yum -y upgrade
 sudo wget https://centos7.iuscommunity.org/ius-release.rpm
 sudo sudo rpm -Uvh ius-release*.rpm
@@ -31,16 +31,16 @@ sudo wget http://www.webmin.com/jcameron-key.asc
 sudo rpm --import jcameron-key.asc
 sudo yum -y install webmin
 
-#
-yum -y install libpcap iftop
-
-#
-yum -y install open-vm-tools
+#Install extras
+sudo yum -y install libpcap open-vm-tools iftop
 
 #Install APACHE
 sudo yum -y install httpd
 sudo systemctl start httpd.service
 sudo systemctl enable httpd.service
+
+#Configurando https (pendiente)
+# https://wiki.centos.org/es/HowTos/Https
 
 #Abrir puertos del firewalld
 sudo firewall-cmd --permanent --add-port=80/tcp
