@@ -27,7 +27,7 @@
 ### Paso 3 - Instalación -> YetiForce
 
     cd /var/www/html/
-    git clone -b developer https://github.com/YetiForceCompany/YetiForceCRM.git
+    git clone -b developer https://github.com/YetiForceCompany/YetiForceCRM.git .
     sudo chown -hR apache:apache .
     
 
