@@ -1,9 +1,9 @@
-setsebool -P httpd_can_network_connect 1
-setsebool -P httpd_can_network_connect_db 1
-semanage fcontext -a -t httpd_sys_rw_content_t 'csrf-magic'
-restorecon -v 'csrf-magic'
-setsebool -P httpd_unified 1
-setsebool -P polyinstantiation_enabled 1
+sudo setsebool -P httpd_can_network_connect 1
+sudo setsebool -P httpd_can_network_connect_db 1
+sudo semanage fcontext -a -t httpd_sys_rw_content_t 'csrf-magic'
+sudo restorecon -v 'csrf-magic'
+sudo setsebool -P httpd_unified 1
+sudo setsebool -P polyinstantiation_enabled 1
 
 SELINUXCONFIGFILE='/etc/selinux/config'
 sudo sed -i 's/SELINUX=enforcing/SELINUX=disabled/g' $SELINUXCONFIGFILE
@@ -29,6 +29,15 @@ sudo echo "mirrorlist=http://download.webmin.com/download/yum/mirrorlist" >> /et
 sudo wget http://www.webmin.com/jcameron-key.asc
 sudo rpm --import jcameron-key.asc
 sudo yum -y install webmin
+#Prueba permisos a usuario para webmin
+sudo adduser webmin_root
+sudo passwd webmin_root
+sudo rm -Rf /etc/webmin/miniserv.users
+sudo touch /etc/webmin/miniserv.users
+sudo echo "webmin_root:x:0:::::::0:0" >> /etc/webmin/miniserv.users
+sudo rm -Rf /etc/webmin/webmin.acl
+sudo touch /etc/webmin/webmin.acl
+sudo echo "webmin_root: acl adsl-client apache at backup-config bacula-backup bandwidth bind8 burner cfengine change-user cluster-copy cluster-cron cluster-passwd cluster-shell cluster-software cluster-useradmin cluster-usermin cluster-webmin cpan cron custom dfsadmin dhcpd dnsadmin dovecot exim exports fdisk fetchmail file filter firewall frox fsdump grub heartbeat htaccess-htpasswd idmapd inetd init inittab ipfilter ipfw ipsec jabber krb5 ldap-client ldap-server ldap-useradmin lilo logrotate lpadmin lvm mailboxes mailcap majordomo man mon mount net nis openslp pam pap passwd phpini postfix postgresql ppp-client pptp-client pptp-server procmail proc pserver qmailadmin quota raid samba sarg sendmail sentry servers shell shorewall smart-status smf software spam squid sshd status stunnel syslog syslog-ng tcpwrappers telnet time tunnel updown useradmin usermin vgetty webalizer webminlog webmin xinetd vsftpd mysql package-updates system-status webmincron ajaxterm" >> nano /etc/webmin/webmin.acl
 
 #Install extras
 sudo yum -y install libpcap open-vm-tools iftop
