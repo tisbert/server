@@ -1,9 +1,8 @@
-### Opcional - pre-install VirtualBox Guest Additions
+### Opcional - pre-install for "VirtualBox Guest Additions"
     sudo yum -y install epel-release
     sudo yum -y upgrade
-    sudo yum -y install kernel-headers kernel-devel dkms bzip2 gcc
+    sudo yum -y install binutils gcc make patch libgomp glibc-headers glibc-devel kernel-headers kernel-devel dkms bzip2
     sudo yum groupinstall "Development Tools"
-    sudo yum -y upgrade
 
 ### Paso 1 - Preparar CentOS
     cd /root
