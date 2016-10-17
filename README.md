@@ -1,39 +1,37 @@
 ### Opcional - pre-install VirtualBox Guest Additions
-    yum -y install dkms
+    sudo yum -y install epel-release
+    sudo yum -y upgrade
+    sudo yum -y install kernel-headers kernel-devel dkms bzip2 gcc
+    sudo yum groupinstall "Development Tools"
+    sudo yum -y upgrade
 
 ### Paso 1 - Preparar CentOS
-
     cd /root
-    yum -y -q install git
-    git clone -b master https://github.com/WalterLuis/autoinstall.git
+    sudo yum -y install git
+    sudo git clone -b master https://github.com/WalterLuis/autoinstall.git
     cd /root/autoinstall
-    chmod +777 autoinstall.sh
-    ./autoinstall.sh
-    
+    sudo chmod +777 autoinstall.sh
+    sudo ./autoinstall.sh
 
 ### Paso 2 - Instalación -> composer
-
-    mkdir /usr/share/composer
-    cd /usr/share/composer
-    php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
-    php -r "if (hash_file('SHA384', 'composer-setup.php') === 'e115a8dc7871f15d853148a7fbac7da27d6c0030b848d9b3dc09e2a0388afed865e6a3d6b3c0fad45c48e2b5fc1196ae') { echo 'Installer verified'; } else { echo 'Installer corrupt'; unlink('composer-setup.php'); } echo PHP_EOL;"
-    php composer-setup.php
-    php -r "unlink('composer-setup.php');"
-    rm -Rf composer-setup.php
-    touch composer.json
-    echo "{}" >> composer.json
-    php composer.phar install
+    sudo mkdir /usr/share/composer
+    sudo cd /usr/share/composer
+    sudo php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
+    sudo php -r "if (hash_file('SHA384', 'composer-setup.php') === 'e115a8dc7871f15d853148a7fbac7da27d6c0030b848d9b3dc09e2a0388afed865e6a3d6b3c0fad45c48e2b5fc1196ae') { echo 'Installer verified'; } else { echo 'Installer corrupt'; unlink('composer-setup.php'); } echo PHP_EOL;"
+    sudo php composer-setup.php
+    sudo php -r "unlink('composer-setup.php');"
+    sudo rm -Rf composer-setup.php
+    sudo touch composer.json
+    sudo echo "{}" >> composer.json
+    sudo php composer.phar install
     
 ### Paso 3 - Instalación -> YetiForce
-
     cd /var/www/html/
-    git clone -b developer https://github.com/YetiForceCompany/YetiForceCRM.git .
+    sudo git clone -b developer https://github.com/YetiForceCompany/YetiForceCRM.git .
     sudo chown -hR apache:apache .
     
 
 ### Extras - Librerías de composer
-
     cd /usr/share/composer
-    php composer.phar require zendframework/zendframework
-    php composer.phar require zendframework/zend-mvc
-    
+    sudo php composer.phar require zendframework/zendframework
+    sudo php composer.phar require zendframework/zend-mvc
