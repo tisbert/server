@@ -11,9 +11,9 @@ sudo cat '/etc/selinux/config' | grep '^SELINUX='
 
 #Install IUS y EPEL
 sudo yum -y upgrade
-sudo yum -y install unzip bc wget deltarpm gcc gcc-c++ make patch libgomp glibc-headers binutils glibc-devel krb5-devel nano openssl-devel touch mod_ssl zlib zlib-devel gd gd-devel pcre pcre-devel libjpeg libjpeg-devel libpng libpng-devel bzip2 bzip2-devel dkms
+sudo yum -y install perl perl-Net-SSLeay openssl perl-IO-Tty unzip bc wget gcc gcc-c++ make patch libgomp glibc-headers binutils glibc-devel nano openssl-devel touch mod_ssl zlib zlib-devel bzip2 bzip2-devel dkms
 sudo yum -y install epel-release
-sudo yum -y install pwgen bash-completion libmcrypt libmcrypt-devel kernel-headers kernel-devel
+sudo yum -y install pwgen libmcrypt libmcrypt-devel kernel-headers kernel-devel
 sudo yum clean all
 sudo yum -y upgrade
 sudo wget https://centos7.iuscommunity.org/ius-release.rpm
@@ -26,6 +26,7 @@ sudo echo "[Webmin]" >> /etc/yum.repos.d/webmin.repo
 sudo echo "name=Webmin Distribution Neutral" >> /etc/yum.repos.d/webmin.repo
 sudo echo "#baseurl=http://download.webmin.com/download/yum" >> /etc/yum.repos.d/webmin.repo
 sudo echo "mirrorlist=http://download.webmin.com/download/yum/mirrorlist" >> /etc/yum.repos.d/webmin.repo
+sudo echo "enabled=1" >> /etc/yum.repos.d/webmin.repo
 sudo wget http://www.webmin.com/jcameron-key.asc
 sudo rpm --import jcameron-key.asc
 sudo yum -y install webmin
