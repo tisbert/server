@@ -112,7 +112,7 @@ sudo mv -f my.cnf /etc/
 
 #Finalizando instalación
 sudo systemctl restart httpd.service
-echo "Instalación finalizada"
+echo "Primera parte finalizada"
 echo ""
 echo "Acceder a webmin por 'https://0.0.0.0:10000'"
 
