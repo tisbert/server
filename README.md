@@ -9,7 +9,8 @@
     sudo yum -y install git
     sudo git clone -b master https://github.com/WalterLuis/autoinstall.git
     cd /root/autoinstall
-    sudo chmod +777 autoinstall.sh
+    #sudo chmod +777 autoinstall.sh
+    sudo chmod 0700 autoinstall.sh
     sudo ./autoinstall.sh
 
 ### Paso 2 - Instalación -> composer
