@@ -2,7 +2,6 @@ sudo setsebool -P httpd_can_network_connect 1
 sudo setsebool -P httpd_can_network_connect_db 1
 sudo setsebool -P httpd_unified 1
 sudo setsebool -P polyinstantiation_enabled 1
-
 sudo sed -i 's/SELINUX=enforcing/SELINUX=disabled/g' '/etc/selinux/config'
 sudo sed -i 's/SELINUX=permissive/SELINUX=disabled/g' '/etc/selinux/config'
 sudo setenforce 0
@@ -16,8 +15,6 @@ sudo yum -y install pwgen libmcrypt libmcrypt-devel kernel-headers kernel-devel
 sudo wget https://centos7.iuscommunity.org/ius-release.rpm
 sudo rpm -Uvh ius-release*.rpm
 sudo rm -Rf ius-release.rpm
-sudo yum clean all
-sudo yum -y upgrade
 
 #Install webmin
 sudo rm -Rf /etc/yum.repos.d/webmin.repo
