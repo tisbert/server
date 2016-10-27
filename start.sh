@@ -1,3 +1,5 @@
+echo "Deshabilitando SELinux - No olvidar reiniciar"
+echo ""
 sudo setsebool -P httpd_can_network_connect 1
 sudo setsebool -P httpd_can_network_connect_db 1
 sudo setsebool -P httpd_unified 1
@@ -8,6 +10,9 @@ sudo setenforce 0
 sudo cat '/etc/selinux/config' | grep '^SELINUX='
 
 #Install IUS y EPEL
+echo ""
+echo "Instalando IUS, EPEL y librerias varias"
+echo ""
 sudo yum -y upgrade
 sudo yum -y install perl perl-Net-SSLeay openssl perl-IO-Tty unzip bc wget gcc gcc-c++ make patch libgomp glibc-headers binutils glibc-devel nano openssl-devel touch mod_ssl zlib zlib-devel bzip2 bzip2-devel dkms
 sudo yum -y install epel-release
@@ -17,6 +22,9 @@ sudo rpm -Uvh ius-release*.rpm
 sudo rm -Rf ius-release.rpm
 
 #Install webmin
+echo ""
+echo "Instalando webmin"
+echo ""
 sudo rm -Rf /etc/yum.repos.d/webmin.repo
 sudo touch /etc/yum.repos.d/webmin.repo
 sudo echo "[Webmin]" >> /etc/yum.repos.d/webmin.repo
@@ -40,9 +48,15 @@ sudo echo "webmin_root: acl adsl-client apache at backup-config bacula-backup ba
 sudo service webmin restart
 
 #Install extras
+echo ""
+echo "Instalando extras"
+echo ""
 sudo yum -y install libpcap open-vm-tools iftop
 
 #Install APACHE
+echo ""
+echo "Instalando APACHE"
+echo ""
 sudo yum -y install httpd
 sudo systemctl start httpd.service
 sudo systemctl enable httpd.service
@@ -52,6 +66,9 @@ sudo systemctl enable httpd.service
 # https://wiki.centos.org/es/HowTos/Https
 
 #Abrir puertos del firewalld
+echo ""
+echo "Abriendo puertos"
+echo ""
 sudo firewall-cmd --permanent --add-port=80/tcp
 sudo firewall-cmd --permanent --add-service http
 sudo firewall-cmd --permanent --add-port=443/tcp
@@ -70,27 +87,34 @@ sudo systemctl restart firewalld.service
 #sudo service iptables stop
 
 #Install MySQL
+echo ""
+echo "Instalando MySQL"
+echo ""
 sudo yum -y install mariadb-server mariadb mariadb-libs
 sudo systemctl start mariadb.service
 sudo systemctl enable mariadb.service
 sudo dbpass=$(pwgen -1cnys 24)
-echo ""
 echo "////////////////////////////////////////////////////"
 echo ""
 echo "Password generada de 24bits opcional para password de mysql:  "$dbpass
 echo ""
 echo "////////////////////////////////////////////////////"
-echo ""
 sudo touch /root/dbpass.conf
 sudo echo $dbpass >> /root/dbpass.conf
 sudo mysql_secure_installation
 
 #Install PHP 5.6
+echo ""
+echo "Instalando PHP"
+echo ""
 sudo yum -y install php56u php56u-pdo php56u-gd php56u-imap php56u-ldap php56u-xml php56u-intl php56u-soap php56u-mbstring php56u-pear php56u-mysql
 sudo systemctl restart httpd.service
 sudo systemctl enable httpd.service
 
 #Install PEAR library
+echo ""
+echo "Instalando librerias de PEAR"
+echo ""
 sudo pear install Auth_SASL
 sudo pear install Net_SMTP-1.7.2
 sudo pear install Net_IDNA2-0.1.1
@@ -100,6 +124,9 @@ sudo pear install Net_URL2-2.2.1
 sudo pear install HTTP_Request2
 
 #Quitar pagina de bienvenida
+echo ""
+echo "Quitando página de bienvenida"
+echo ""
 sudo rm -Rf /etc/httpd/conf.d/welcome.conf
 sudo touch /etc/httpd/conf.d/welcome.conf
 sudo echo "#" >> /etc/httpd/conf.d/welcome.conf
