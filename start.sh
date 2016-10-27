@@ -54,6 +54,9 @@ echo ""
 echo "Instalando extras"
 echo ""
 sudo yum -y install libpcap open-vm-tools iftop
+sudo wget https://browscap.org/stream?q=Full_BrowsCapINI
+sudo mkdir /etc/extra
+sudo mv -f full_asp_browscap.ini /etc/extra
 
 #Install APACHE
 echo ""
