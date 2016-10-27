@@ -5,18 +5,19 @@ sudo restorecon -v 'csrf-magic'
 sudo setsebool -P httpd_unified 1
 sudo setsebool -P polyinstantiation_enabled 1
 
-SELINUXCONFIGFILE='/etc/selinux/config'
-sudo sed -i 's/SELINUX=enforcing/SELINUX=disabled/g' $SELINUXCONFIGFILE
-sudo sed -i 's/SELINUX=permissive/SELINUX=disabled/g' $SELINUXCONFIGFILE
+sudo sed -i 's/SELINUX=enforcing/SELINUX=disabled/g' '/etc/selinux/config'
+sudo sed -i 's/SELINUX=permissive/SELINUX=disabled/g' '/etc/selinux/config'
 sudo setenforce 0
-sudo cat $SELINUXCONFIGFILE | grep '^SELINUX='
+sudo cat '/etc/selinux/config' | grep '^SELINUX='
 
 #Install IUS y EPEL
 sudo yum clean all
-sudo yum -y install epel-release pwgen git touch mod_ssl openssl
+sudo yum -y install unzip bc wget deltarpm ca-certificates yum-plugin-security bash net-tools autoconf gcc gcc-c++ automake patch sysstat openssh file krb5-devel nano git openssl openssl-devel touch mod_ssl curl curl-devel zlib zlib-devel gd gd-devel pcre pcre-devel libjpeg libjpeg-devel libpng libpng-devel libxml2 libxml2-devel glib2 glib2-devel bzip2 bzip2-devel 
+sudo yum -y install epel-release
+sudo yum -y install pngquant optipng jpegoptim pwgen pbzip2 bash-completion libmcrypt libmcrypt-devel kernel-headers kernel-devel ease
 sudo yum -y upgrade
 sudo wget https://centos7.iuscommunity.org/ius-release.rpm
-sudo sudo rpm -Uvh ius-release*.rpm
+sudo rpm -Uvh ius-release*.rpm
 sudo rm -Rf ius-release.rpm
 
 #Install webmin
