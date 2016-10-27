@@ -7,6 +7,6 @@ sudo touch composer.json
 sudo echo "{}" >> composer.json
 sudo php composer.phar install
 
-#Librerías de composer
+#Extras - Librerías de composer
 sudo php composer.phar require zendframework/zendframework
 sudo php composer.phar require zendframework/zend-mvc
