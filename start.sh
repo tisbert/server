@@ -21,7 +21,6 @@ sudo rpm -Uvh ius-release*.rpm
 sudo rm -Rf ius-release.rpm
 
 #Install webmin
-sudo yum -y install nano wget
 sudo touch /etc/yum.repos.d/webmin.repo
 sudo echo "[Webmin]" >> /etc/yum.repos.d/webmin.repo
 sudo echo "name=Webmin Distribution Neutral" >> /etc/yum.repos.d/webmin.repo
@@ -31,8 +30,9 @@ sudo wget http://www.webmin.com/jcameron-key.asc
 sudo rpm --import jcameron-key.asc
 sudo yum -y install webmin
 #Prueba permisos a usuario para webmin
+sudo userpass=$(pwgen -1cnys 8)
 sudo adduser webmin_root
-sudo passwd webmin_root
+sudo passwd $userpass
 sudo rm -Rf /etc/webmin/miniserv.users
 sudo touch /etc/webmin/miniserv.users
 sudo echo "webmin_root:x:0:::::::0:0" >> /etc/webmin/miniserv.users
