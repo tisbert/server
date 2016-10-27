@@ -31,11 +31,13 @@ sudo echo "[Webmin]" >> /etc/yum.repos.d/webmin.repo
 sudo echo "name=Webmin Distribution Neutral" >> /etc/yum.repos.d/webmin.repo
 sudo echo "#baseurl=http://download.webmin.com/download/yum" >> /etc/yum.repos.d/webmin.repo
 sudo echo "mirrorlist=http://download.webmin.com/download/yum/mirrorlist" >> /etc/yum.repos.d/webmin.repo
-sudo echo "enabled=1" >> /etc/yum.repos.d/webmin.repo
+sudo echo "enabled=0" >> /etc/yum.repos.d/webmin.repo
 sudo wget http://www.webmin.com/jcameron-key.asc
 sudo rpm --import jcameron-key.asc
 sudo yum clean all
-sudo yum -y install webmin
+sudo wget http://prdownloads.sourceforge.net/webadmin/webmin-1.820-1.noarch.rpm
+sudo rpm -U webmin-1.820-1.noarch.rpm
+#sudo yum -y install webmin
 #Prueba permisos a usuario para webmin
 sudo adduser webmin_root
 sudo passwd webmin_root
