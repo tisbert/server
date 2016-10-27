@@ -152,5 +152,6 @@ echo "Acceder a webmin por 'https://0.0.0.0:10000'"
 sudo mkdir /usr/share/composer
 sudo mv -f compos.sh /usr/share/composer
 sudo chmod 0700 /usr/share/composer/compos.sh
+echo "Instalar compose: cd /usr/share/composer/compos.sh"
 sudo rm -Rf README.md
 sudo rm -Rf start.sh
