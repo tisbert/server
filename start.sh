@@ -30,9 +30,8 @@ sudo wget http://www.webmin.com/jcameron-key.asc
 sudo rpm --import jcameron-key.asc
 sudo yum -y install webmin
 #Prueba permisos a usuario para webmin
-sudo userpass=$(pwgen -1cnys 8)
 sudo adduser webmin_root
-sudo passwd $userpass
+sudo passwd webmin_root
 sudo rm -Rf /etc/webmin/miniserv.users
 sudo touch /etc/webmin/miniserv.users
 sudo echo "webmin_root:x:0:::::::0:0" >> /etc/webmin/miniserv.users
@@ -83,6 +82,8 @@ echo "Password generada de 24bits opcional para password de mysql:  "$dbpass
 echo ""
 echo "////////////////////////////////////////////////////"
 echo ""
+sudo touch /root/dbpass.conf
+sudo echo $dbpass >> /root/dbpass.conf
 sudo mysql_secure_installation
 
 #Install PHP 5.6
