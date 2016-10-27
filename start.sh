@@ -14,13 +14,14 @@ sudo yum -y upgrade
 sudo yum -y install perl perl-Net-SSLeay openssl perl-IO-Tty unzip bc wget gcc gcc-c++ make patch libgomp glibc-headers binutils glibc-devel nano openssl-devel touch mod_ssl zlib zlib-devel bzip2 bzip2-devel dkms
 sudo yum -y install epel-release
 sudo yum -y install pwgen libmcrypt libmcrypt-devel kernel-headers kernel-devel
-sudo yum clean all
-sudo yum -y upgrade
 sudo wget https://centos7.iuscommunity.org/ius-release.rpm
 sudo rpm -Uvh ius-release*.rpm
 sudo rm -Rf ius-release.rpm
+sudo yum clean all
+sudo yum -y upgrade
 
 #Install webmin
+sudo rm -Rf /etc/yum.repos.d/webmin.repo
 sudo touch /etc/yum.repos.d/webmin.repo
 sudo echo "[Webmin]" >> /etc/yum.repos.d/webmin.repo
 sudo echo "name=Webmin Distribution Neutral" >> /etc/yum.repos.d/webmin.repo
