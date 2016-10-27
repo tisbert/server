@@ -1,6 +1,5 @@
 sudo setsebool -P httpd_can_network_connect 1
 sudo setsebool -P httpd_can_network_connect_db 1
-semanage fcontext -a -t httpd_sys_rw_content_t 'csrf-magic'
 sudo setsebool -P httpd_unified 1
 sudo setsebool -P polyinstantiation_enabled 1
 
@@ -30,6 +29,7 @@ sudo echo "mirrorlist=http://download.webmin.com/download/yum/mirrorlist" >> /et
 sudo echo "enabled=1" >> /etc/yum.repos.d/webmin.repo
 sudo wget http://www.webmin.com/jcameron-key.asc
 sudo rpm --import jcameron-key.asc
+sudo yum clean all
 sudo yum -y install webmin
 #Prueba permisos a usuario para webmin
 sudo adduser webmin_root
