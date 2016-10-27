@@ -12,7 +12,7 @@ sudo cat '/etc/selinux/config' | grep '^SELINUX='
 
 #Install IUS y EPEL
 sudo yum clean all
-sudo yum -y install unzip bc wget deltarpm ca-certificates yum-plugin-security bash net-tools autoconf gcc gcc-c++ automake patch sysstat openssh file krb5-devel nano git openssl openssl-devel touch mod_ssl curl curl-devel zlib zlib-devel gd gd-devel pcre pcre-devel libjpeg libjpeg-devel libpng libpng-devel libxml2 libxml2-devel glib2 glib2-devel bzip2 bzip2-devel 
+sudo yum -y install unzip bc wget deltarpm yum-plugin-security bash net-tools gcc gcc-c++ automake patch sysstat file krb5-devel nano git openssl-devel touch mod_ssl curl curl-devel zlib zlib-devel gd gd-devel pcre pcre-devel libjpeg libjpeg-devel libpng libpng-devel libxml2 libxml2-devel glib2 glib2-devel bzip2 bzip2-devel 
 sudo yum -y install epel-release
 sudo yum -y install pngquant optipng jpegoptim pwgen pbzip2 bash-completion libmcrypt libmcrypt-devel kernel-headers kernel-devel ease
 sudo yum -y upgrade
