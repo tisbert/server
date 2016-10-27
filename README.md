@@ -7,7 +7,8 @@
 ### Paso 1 - Preparar CentOS
     cd /root
     sudo yum -y install git
-    sudo git clone -b master https://github.com/WalterLuis/server.git .
+    sudo git clone -b master https://github.com/WalterLuis/server.git
+    cd server
     #sudo chmod +777 start.sh
     sudo chmod 0700 start.sh
     sudo ./start.sh
