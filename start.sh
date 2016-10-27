@@ -10,10 +10,11 @@ sudo setenforce 0
 sudo cat '/etc/selinux/config' | grep '^SELINUX='
 
 #Install IUS y EPEL
-sudo yum clean all
+sudo yum -y upgrade
 sudo yum -y install unzip bc wget deltarpm gcc gcc-c++ make patch libgomp glibc-headers binutils glibc-devel krb5-devel nano openssl-devel touch mod_ssl zlib zlib-devel gd gd-devel pcre pcre-devel libjpeg libjpeg-devel libpng libpng-devel bzip2 bzip2-devel dkms
 sudo yum -y install epel-release
 sudo yum -y install pwgen bash-completion libmcrypt libmcrypt-devel kernel-headers kernel-devel
+sudo yum clean all
 sudo yum -y upgrade
 sudo wget https://centos7.iuscommunity.org/ius-release.rpm
 sudo rpm -Uvh ius-release*.rpm
