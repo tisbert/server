@@ -14,7 +14,7 @@ echo ""
 echo "Instalando IUS, EPEL y librerias varias"
 echo ""
 sudo yum -y upgrade
-sudo yum -y install perl perl-Net-SSLeay openssl perl-IO-Tty unzip bc wget gcc gcc-c++ make patch libgomp glibc-headers binutils glibc-devel nano openssl-devel touch mod_ssl zlib zlib-devel bzip2 bzip2-devel dkms
+sudo yum -y install perl perl-Net-SSLeay openssl perl-IO-Tty bc wget gcc gcc-c++ make patch libgomp glibc-headers binutils glibc-devel nano openssl-devel touch mod_ssl zlib* bzip2 bzip2-devel dkms
 sudo yum -y install epel-release
 sudo yum -y install pwgen libmcrypt libmcrypt-devel kernel-headers kernel-devel
 sudo wget https://centos7.iuscommunity.org/ius-release.rpm
@@ -121,13 +121,14 @@ sudo systemctl enable httpd.service
 echo ""
 echo "Instalando librerias de PEAR"
 echo ""
-sudo pear install Auth_SASL
-sudo pear install Net_SMTP-1.7.2
-sudo pear install Net_IDNA2-0.1.1
-sudo pear install Mail_Mime-1.10.0
-sudo pear install Mail-1.3.0
-sudo pear install Net_URL2-2.2.1
-sudo pear install HTTP_Request2
+sudo pear upgrade-all
+sudo pear install --alldeps Auth_SASL
+sudo pear install --alldeps Net_SMTP-1.7.2
+sudo pear install --alldeps Net_IDNA2-0.1.1
+sudo pear install --alldeps Mail_Mime-1.10.0
+sudo pear install --alldeps Mail-1.3.0
+sudo pear install --alldeps Net_URL2-2.2.1
+sudo pear install --alldeps HTTP_Request2
 
 #Quitar pagina de bienvenida
 echo ""
