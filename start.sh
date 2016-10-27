@@ -115,3 +115,8 @@ sudo systemctl restart httpd.service
 echo "Instalación finalizada"
 echo ""
 echo "Acceder a webmin por 'https://0.0.0.0:10000'"
+
+sudo mkdir /usr/share/composer
+sudo mv -f compos.sh /usr/share/composer
+
+sudo rm -Rf start.sh
