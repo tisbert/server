@@ -97,7 +97,7 @@ echo ""
 sudo yum -y install mariadb-server mariadb mariadb-libs --skip-broken
 sudo systemctl start mariadb.service
 sudo systemctl enable mariadb.service
-sudo dbpass=$(pwgen -1cnys 24)
+dbpass=$(pwgen -1cnys 24)
 echo "////////////////////////////////////////////////////"
 echo ""
 echo "Password generada de 24bits opcional para password de mysql:  "$dbpass
