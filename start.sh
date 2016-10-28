@@ -1,5 +1,4 @@
-echo "Deshabilitando SELinux - No olvidar reiniciar"
-echo ""
+echo "Deshabilitando SElinux"
 sudo setsebool -P httpd_can_network_connect 1
 sudo setsebool -P httpd_can_network_connect_db 1
 sudo setsebool -P httpd_unified 1
@@ -14,9 +13,8 @@ echo ""
 echo "Instalando IUS, EPEL y librerias varias"
 echo ""
 sudo yum -y upgrade
-sudo yum -y install perl perl-Net-SSLeay openssl perl-IO-Tty bc wget gcc gcc-c++ make patch libgomp glibc-headers binutils glibc-devel nano openssl-devel touch mod_ssl zlib* bzip2 bzip2-devel dkms
 sudo yum -y install epel-release
-sudo yum -y install pwgen libmcrypt libmcrypt-devel kernel-headers kernel-devel
+sudo yum -y install pwgen libmcrypt libmcrypt-devel kernel-headers kernel-devel perl perl-Net-SSLeay openssl perl-IO-Tty bc wget gcc gcc-c++ make patch libgomp glibc-headers binutils glibc-devel nano openssl-devel touch mod_ssl zlib* bzip2 bzip2-devel dkms
 sudo wget https://centos7.iuscommunity.org/ius-release.rpm
 sudo rpm -Uvh ius-release*.rpm
 sudo rm -Rf ius-release.rpm
@@ -153,6 +151,8 @@ echo "Acceder a webmin por 'https://0.0.0.0:10000'"
 sudo mkdir /usr/share/composer
 sudo mv -f compos.sh /usr/share/composer
 sudo chmod 0700 /usr/share/composer/compos.sh
-echo "Instalar compose: cd /usr/share/composer/compos.sh"
-sudo rm -Rf README.md
-sudo rm -Rf start.sh
+echo "No olvides reiniciar para que se deshabilite completamente SELinux"
+echo "Para instalar compose:"
+echo "1.- cd /usr/share/composer/"
+echo "2.- ./compos.sh"
+sudo rm -Rf /root/server/
