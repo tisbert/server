@@ -41,11 +41,11 @@ sudo rpm -U webmin-1.820-1.noarch.rpm
 #Prueba permisos a usuario para webmin
 sudo adduser webmin_root
 sudo passwd webmin_root
-sudo rm -Rf /etc/webmin/miniserv.users
-sudo touch /etc/webmin/miniserv.users
+#sudo rm -Rf /etc/webmin/miniserv.users
+#sudo touch /etc/webmin/miniserv.users
 sudo echo "webmin_root:x:0:::::::0:0" >> /etc/webmin/miniserv.users
-sudo rm -Rf /etc/webmin/webmin.acl
-sudo touch /etc/webmin/webmin.acl
+#sudo rm -Rf /etc/webmin/webmin.acl
+#sudo touch /etc/webmin/webmin.acl
 sudo echo "webmin_root: acl adsl-client apache at backup-config bacula-backup bandwidth bind8 burner cfengine change-user cluster-copy cluster-cron cluster-passwd cluster-shell cluster-software cluster-useradmin cluster-usermin cluster-webmin cpan cron custom dfsadmin dhcpd dnsadmin dovecot exim exports fdisk fetchmail file filter firewall frox fsdump grub heartbeat htaccess-htpasswd idmapd inetd init inittab ipfilter ipfw ipsec jabber krb5 ldap-client ldap-server ldap-useradmin lilo logrotate lpadmin lvm mailboxes mailcap majordomo man mon mount net nis openslp pam pap passwd phpini postfix postgresql ppp-client pptp-client pptp-server procmail proc pserver qmailadmin quota raid samba sarg sendmail sentry servers shell shorewall smart-status smf software spam squid sshd status stunnel syslog syslog-ng tcpwrappers telnet time tunnel updown useradmin usermin vgetty webalizer webminlog webmin xinetd vsftpd mysql package-updates system-status webmincron ajaxterm" >> nano /etc/webmin/webmin.acl
 sudo service webmin restart
 
