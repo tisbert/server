@@ -13,8 +13,8 @@ echo ""
 echo "Instalando IUS, EPEL y librerias varias"
 echo ""
 sudo yum -y upgrade
-sudo yum -y install epel-release
-sudo yum -y install pwgen libmcrypt libmcrypt-devel kernel-headers kernel-devel perl perl-Net-SSLeay openssl perl-IO-Tty bc wget gcc gcc-c++ make patch libgomp glibc-headers binutils glibc-devel nano openssl-devel touch mod_ssl zlib* bzip2 bzip2-devel dkms
+sudo yum -y install epel-release --skip-broken
+sudo yum -y install pwgen libmcrypt libmcrypt-devel kernel-headers kernel-devel perl perl-Net-SSLeay openssl perl-IO-Tty bc wget gcc gcc-c++ make patch libgomp glibc-headers binutils glibc-devel nano openssl-devel touch mod_ssl zlib* bzip2 bzip2-devel dkms --skip-broken
 sudo wget https://centos7.iuscommunity.org/ius-release.rpm
 sudo rpm -Uvh ius-release*.rpm
 sudo rm -Rf ius-release.rpm
@@ -61,7 +61,7 @@ sudo mv -f full_php_browscap.ini /etc/extra
 echo ""
 echo "Instalando APACHE"
 echo ""
-sudo yum -y install httpd
+sudo yum -y install httpd --skip-broken
 sudo systemctl start httpd.service
 sudo systemctl enable httpd.service
 
@@ -94,7 +94,7 @@ sudo systemctl restart firewalld.service
 echo ""
 echo "Instalando MySQL"
 echo ""
-sudo yum -y install mariadb-server mariadb mariadb-libs
+sudo yum -y install mariadb-server mariadb mariadb-libs --skip-broken
 sudo systemctl start mariadb.service
 sudo systemctl enable mariadb.service
 sudo dbpass=$(pwgen -1cnys 24)
@@ -111,7 +111,7 @@ sudo mysql_secure_installation
 echo ""
 echo "Instalando PHP"
 echo ""
-sudo yum -y install php56u php56u-pdo php56u-gd php56u-imap php56u-ldap php56u-xml php56u-intl php56u-soap php56u-mbstring php56u-pear php56u-mysql
+sudo yum -y install php56u php56u-pdo php56u-gd php56u-imap php56u-ldap php56u-xml php56u-intl php56u-soap php56u-mbstring php56u-pear php56u-mysql --skip-broken
 sudo systemctl restart httpd.service
 sudo systemctl enable httpd.service
 
