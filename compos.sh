@@ -10,3 +10,8 @@ sudo php composer.phar install
 #Extras - Librerías de composer
 sudo php composer.phar require zendframework/zendframework
 sudo php composer.phar require zendframework/zend-mvc
+
+
+
+#Fin
+sudo rm -Rf /usr/share/composer/compos.sh
