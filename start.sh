@@ -12,12 +12,25 @@ sudo cat '/etc/selinux/config' | grep '^SELINUX='
 echo ""
 echo "Instalando IUS, EPEL y librerias varias"
 echo ""
-sudo yum -y upgrade
 sudo yum -y install epel-release --skip-broken
-sudo yum -y install pwgen libmcrypt libmcrypt-devel kernel-headers kernel-devel perl perl-Net-SSLeay openssl perl-IO-Tty bc wget gcc gcc-c++ make patch libgomp glibc-headers binutils glibc-devel nano openssl-devel touch mod_ssl zlib* bzip2 bzip2-devel dkms --skip-broken
 sudo wget https://centos7.iuscommunity.org/ius-release.rpm
 sudo rpm -Uvh ius-release*.rpm
 sudo rm -Rf ius-release.rpm
+sudo yum -y upgrade --skip-broken
+sudo yum clean all
+sudo yum -y upgrade --skip-broken
+
+#Install extras
+echo ""
+echo "Instalando extras"
+echo ""
+sudo yum -y install axel --skip-broken
+sudo yum -y install dkms nano bzip2 bzip2-devel openssl openssl-devel mod_ssl touch wget lynx bc grep awk unzip bc coreutils file dos2unix ioping curl libcurl libcurl-devel autoconf automake cmake freetype-devel gcc gcc-c++ libtool make mercurial nasm pkgconfig zlib-devel yasm yasm-devel numactl-devel pwgen patch readline zlib zlib-devel bash libmcrypt libmcrypt-devel kernel-headers kernel-devel libpcap open-vm-tools iftop --skip-broken
+sudo yum -y install GeoIP GeoIP-devel --disablerepo=rpmforge --skip-broken
+
+sudo wget https://browscap.org/stream?q=Full_PHP_BrowsCapINI -O full_php_browscap.ini
+sudo mkdir /etc/extra
+sudo mv -f full_php_browscap.ini /etc/extra
 
 #Install webmin
 echo ""
@@ -41,16 +54,6 @@ sudo passwd webmin_root
 sudo echo "webmin_root:x:0:::::::0:0" >> /etc/webmin/miniserv.users
 sudo echo "webmin_root: backup-config change-user webmincron usermin webminlog webmin servers acl bacula-backup init passwd quota mount fsdump inittab ldap-client ldap-useradmin logrotate mailcap mon pam proc at cron package-updates software man syslog syslog-ng system-status useradmin apache bind8 dhcpd dovecot exim fetchmail jabber ldap-server mysql openslp postfix postgresql proftpd procmail qmailadmin mailboxes sshd samba sendmail spam squid sarg wuftpd webalizer adsl-client bandwidth fail2ban firewalld ipsec krb5 firewall firewall6 exports nis net xinetd inetd pap ppp-client pptp-client pptp-server stunnel shorewall shorewall6 tcpwrappers idmapd filter burner grub raid lvm fdisk lpadmin smart-status time vgetty iscsi-client iscsi-server iscsi-tgtd iscsi-target cluster-passwd cluster-copy cluster-cron cluster-shell cluster-software cluster-usermin cluster-useradmin cluster-webmin heartbeat shell custom filemin tunnel file phpini cpan htaccess-htpasswd telnet status ajaxterm updown dfsadmin ipfilter ipfw smf" >> /etc/webmin/webmin.acl
 sudo service webmin restart
-
-#Install extras
-echo ""
-echo "Instalando extras"
-echo ""
-sudo yum -y install libpcap open-vm-tools iftop
-#full_asp_browscap.ini
-sudo wget https://browscap.org/stream?q=Full_PHP_BrowsCapINI -O full_php_browscap.ini
-sudo mkdir /etc/extra
-sudo mv -f full_php_browscap.ini /etc/extra
 
 #Install APACHE
 echo ""
