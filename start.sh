@@ -113,7 +113,8 @@ echo "Instalando PHP"
 echo ""
 #sudo yum -y remove php*
 #sudo yum -y install php56u php56u-pdo php56u-gd php56u-imap php56u-ldap php56u-xml php56u-intl php56u-soap php56u-mbstring php56u-pear php56u-mysql --skip-broken
-sudo yum -y install php php-pdo php-gd php-imap php-ldap php-xml php-intl php-soap php-mbstring php-pear php-mysql --skip-broken
+#sudo yum -y install php php-pdo php-gd php-imap php-ldap php-xml php-intl php-soap php-mbstring php-pear php-mysql --skip-broken
+sudo yum -y install php-imap php-ldap php-intl php-soap php-mbstring php-mysql --skip-broken
 sudo systemctl restart httpd.service
 sudo systemctl enable httpd.service
 
