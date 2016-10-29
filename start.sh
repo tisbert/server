@@ -19,8 +19,8 @@ sudo rm -Rf ius-release.rpm
 sudo yum -y upgrade --skip-broken
 sudo yum clean all
 sudo yum -y upgrade --skip-broken
-sudo yum install yum-plugin-replace
-sudo yum replace --replace-with php56u php
+sudo yum -y install yum-plugin-replace
+sudo yum -y replace --replace-with php56u php
 
 #Install extras
 echo ""
