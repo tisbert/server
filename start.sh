@@ -62,6 +62,7 @@ echo ""
 echo "Instalando APACHE"
 echo ""
 sudo yum -y install httpd --skip-broken
+sudo chown apache:apache /etc/extra/full_php_browscap.ini
 sudo systemctl start httpd.service
 sudo systemctl enable httpd.service
 
