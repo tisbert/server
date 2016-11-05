@@ -67,8 +67,17 @@ sudo systemctl start httpd.service
 sudo systemctl enable httpd.service
 
 #Configurando https (pendiente)
-# https://www.digitalocean.com/community/tutorials/how-to-set-up-apache-virtual-hosts-on-centos-7
-# https://wiki.centos.org/es/HowTos/Https
+mkdir certificados/
+sudo openssl genrsa -out certificados/CA.key 4096
+sudo openssl req -new -x509 -sha512 -days 1825 -key certificados/CA.key -out certificados/CA.crt
+sudo openssl genrsa -out certificados/IA.key 4096
+sudo openssl req -new -sha512 -key certificados/IA.key -out certificados/IA.csr
+sudo openssl x509 -req -sha512 -days 1825 -in certificados/IA.csr -CA certificados/CA.crt -CAkey certificados/CA.key -set_serial 01 -out certificados/IA.crt
+sudo openssl pkcs12 -export -out certificados/IA.p12 -inkey certificados/IA.key -in certificados/IA.crt -chain -CAfile certificados/CA.crt
+chmod -R 0400 certificados/
+cp certificados/CA.crt /etc/pki/tls/certs/
+cp certificados/IA.crt /etc/pki/tls/certs/
+cp certificados/CA.key /etc/pki/tls/private/
 
 #Abrir puertos del firewalld
 echo ""
@@ -114,8 +123,6 @@ echo "Instalando PHP"
 echo ""
 #sudo yum -y remove php*
 sudo yum -y install php56u php56u-pdo php56u-gd php56u-imap php56u-ldap php56u-xml php56u-intl php56u-soap php56u-mbstring php56u-pear php56u-mysql --skip-broken
-#sudo yum -y install php php-pdo php-gd php-imap php-ldap php-xml php-intl php-soap php-mbstring php-pear php-mysql --skip-broken
-#sudo yum -y install php-imap php-ldap php-intl php-soap php-mbstring php-mysql --skip-broken
 sudo systemctl restart httpd.service
 sudo systemctl enable httpd.service
 
