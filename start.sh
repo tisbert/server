@@ -67,17 +67,18 @@ sudo systemctl start httpd.service
 sudo systemctl enable httpd.service
 
 #Configurando https (pendiente)
-mkdir certificados/
+sudo mkdir certificados/
 sudo openssl genrsa -out certificados/CA.key 4096
 sudo openssl req -new -x509 -sha512 -days 1825 -key certificados/CA.key -out certificados/CA.crt
 sudo openssl genrsa -out certificados/IA.key 4096
 sudo openssl req -new -sha512 -key certificados/IA.key -out certificados/IA.csr
 sudo openssl x509 -req -sha512 -days 1825 -in certificados/IA.csr -CA certificados/CA.crt -CAkey certificados/CA.key -set_serial 01 -out certificados/IA.crt
 sudo openssl pkcs12 -export -out certificados/IA.p12 -inkey certificados/IA.key -in certificados/IA.crt -chain -CAfile certificados/CA.crt
-chmod -R 0400 certificados/
-cp certificados/CA.crt /etc/pki/tls/certs/
-cp certificados/IA.crt /etc/pki/tls/certs/
-cp certificados/CA.key /etc/pki/tls/private/
+sudo chmod -R 0400 certificados/
+sudo cp -n certificados/CA.crt /etc/pki/tls/certs/
+sudo cp -n certificados/IA.crt /etc/pki/tls/certs/
+sudo cp -n certificados/CA.key /etc/pki/tls/private/
+sudo cp -n ssl.conf /etc/httpd/conf.d/ssl.conf
 
 #Abrir puertos del firewalld
 echo ""
