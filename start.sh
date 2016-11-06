@@ -187,13 +187,20 @@ done
 
 #Finalizando instalación
 sudo systemctl restart httpd.service
-echo "Primera parte finalizada"
 echo ""
 echo "Acceder a webmin por 'https://0.0.0.0:10000'"
+echo ""
 
 sudo mkdir /usr/share/composer
 sudo mv -f compos.sh /usr/share/composer
 sudo chmod 0700 /usr/share/composer/compos.sh
+
+echo "Eliminando archivos innecesarios en: "$USER
+if [ "$USER" == "root" ]; then
+  sudo rm -Rf /root/server/
+else
+  sudo rm -Rf /home/$USER/server/
+fi
 
 echo "Reiniciar ahora? [Recomendado: SI]"
 select yn in "Si" "No"; do
@@ -204,11 +211,3 @@ select yn in "Si" "No"; do
     No ) exit;;
   esac
 done
-echo "Eliminando archivos innecesarios en: "$USER
-if [ "$USER" == "root" ]; then
-  echo "0"
-  sudo rm -Rf /root/server/
-else
-  echo "1"
-	sudo rm -Rf /home/$USER/server/
-fi
