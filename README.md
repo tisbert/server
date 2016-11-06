@@ -7,7 +7,7 @@
     sudo sh /run/media/root/VBOXADDITIONS_5.1.8_111374/VBoxLinuxAdditions.run
 !<--- binutils gcc make patch libgomp glibc-headers glibc-devel bzip2 --->
 
-    sudo yum groupinstall "Development Tools"
+    sudo yum -y groupinstall "Development Tools"
     sudo yum -y install kernel
     sudo reboot now
     sudo mkdir -p /media/cdrom/
