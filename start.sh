@@ -27,7 +27,7 @@ echo ""
 echo "Instalando extras"
 echo ""
 sudo yum -y install axel --skip-broken
-sudo yum -y install dkms nano bzip2 bzip2-devel openssl openssl-devel mod_ssl touch wget lynx bc grep awk unzip bc coreutils file dos2unix ioping curl libcurl libcurl-devel autoconf automake cmake freetype-devel gcc gcc-c++ libtool make mercurial nasm pkgconfig zlib-devel yasm yasm-devel numactl-devel pwgen patch readline zlib zlib-devel bash libmcrypt libmcrypt-devel kernel-headers kernel-devel libpcap open-vm-tools iftop --skip-broken
+sudo yum -y install dkms nano bzip2 libzip python-paramiko proj tinyxml bzip2-devel openssl openssl-devel mod_ssl touch wget lynx bc grep awk unzip bc coreutils file dos2unix ioping curl libcurl libcurl-devel autoconf automake cmake freetype-devel gcc gcc-c++ libtool make mercurial nasm pkgconfig zlib-devel yasm yasm-devel numactl-devel pwgen patch readline zlib zlib-devel bash libmcrypt libmcrypt-devel kernel-headers kernel-devel libpcap open-vm-tools iftop --skip-broken
 sudo yum -y install GeoIP GeoIP-devel --disablerepo=rpmforge --skip-broken
 
 sudo wget https://browscap.org/stream?q=Full_PHP_BrowsCapINI -O full_php_browscap.ini
@@ -159,6 +159,11 @@ sudo mv -f php.ini /etc/
 
 #Configuracion de MySQL
 sudo mv -f my.cnf /etc/
+
+#Instalar workbench community
+sudo wget http://dev.mysql.com/get/Downloads/MySQLGUITools/mysql-workbench-community-6.3.8-1.el7.x86_64.rpm
+sudo yum -y install libodbc* libpq*
+sudo rpm -Uvh mysql-workbench-community*.rpm
 
 #Finalizando instalación
 sudo systemctl restart httpd.service
