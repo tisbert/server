@@ -72,16 +72,20 @@ sudo systemctl enable httpd.service
 #Configurando https (pendiente)
 sudo mkdir /root/certificados/
 sudo openssl genrsa -out /root/certificados/CA.key 4096
-echo "########################################################################## IMPORTANTE"
-echo "####################################### Es el que se visualiza en el certificado"
-echo "####################################### Common Name: localhost"
-echo "##########################################################################"
+echo "################################################# IMPORTANTE"
+echo ""
+echo "#################### Es el que se visualiza en el certificado"
+echo "#################### Common Name: localhost"
+echo ""
+echo "#################################################"
 sudo openssl req -new -x509 -sha512 -days 1825 -key /root/certificados/CA.key -out /root/certificados/CA.crt
 sudo openssl genrsa -out /root/certificados/IA.key 4096
-echo "########################################################################## IMPORTANTE"
-echo "####################################### Common Name tiene que ser diferente al anterior"
-echo "####################################### Common Name: localhost.localdomain"
-echo "##########################################################################"
+echo "################################################# IMPORTANTE"
+echo ""
+echo "#################### Common Name tiene que ser diferente al anterior"
+echo "#################### Common Name: localhost.localdomain"
+echo ""
+echo "#################################################"
 sudo openssl req -new -sha512 -key /root/certificados/IA.key -out /root/certificados/IA.csr
 sudo openssl x509 -req -sha512 -days 1825 -in /root/certificados/IA.csr -CA /root/certificados/CA.crt -CAkey /root/certificados/CA.key -set_serial 01 -out /root/certificados/IA.crt
 sudo openssl pkcs12 -export -out /root/certificados/IA.p12 -inkey /root/certificados/IA.key -in /root/certificados/IA.crt -chain -CAfile /root//root/certificados/CA.crt
@@ -132,11 +136,11 @@ sudo yum -y install mariadb-server mariadb mariadb-libs --skip-broken
 sudo systemctl start mariadb.service
 sudo systemctl enable mariadb.service
 dbpass=$(pwgen -1cnys 24)
-echo "////////////////////////////////////////////////////"
+echo "#################################################"
 echo ""
 echo "Password generada de 24bits opcional para password de mysql:  "$dbpass
 echo ""
-echo "////////////////////////////////////////////////////"
+echo "#################################################"
 sudo touch /root/dbpass.conf
 sudo echo $dbpass >> /root/dbpass.conf
 sudo mysql_secure_installation
