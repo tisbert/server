@@ -13,7 +13,7 @@ sudo cat '/etc/selinux/config' | grep '^SELINUX='
 
 #Install IUS y EPEL
 echo ""
-echo "Instalando IUS, EPEL y librerias varias"
+echo "Instalando IUS, EPEL"
 echo ""
 sudo yum -y install epel-release --skip-broken
 sudo wget https://centos7.iuscommunity.org/ius-release.rpm
@@ -30,7 +30,7 @@ echo ""
 echo "Instalando extras"
 echo ""
 sudo yum -y install axel --skip-broken
-sudo yum -y install dkms nano bzip2 libzip python-paramiko proj tinyxml bzip2-devel openssl openssl-devel mod_ssl touch wget lynx bc grep awk unzip bc coreutils file dos2unix ioping curl libcurl libcurl-devel autoconf automake cmake freetype-devel gcc gcc-c++ libtool make mercurial nasm pkgconfig zlib-devel yasm yasm-devel numactl-devel pwgen patch readline zlib zlib-devel bash libmcrypt libmcrypt-devel kernel-headers kernel-devel libpcap open-vm-tools iftop --skip-broken
+sudo yum -y install dkms nano bzip2 libzip python2-paramiko proj tinyxml bzip2-devel openssl openssl-devel mod_ssl wget lynx bc grep awk unzip bc coreutils file dos2unix ioping curl libcurl libcurl-devel autoconf automake cmake freetype-devel gcc gcc-c++ libtool make mercurial nasm pkgconfig zlib-devel yasm yasm-devel numactl-devel pwgen patch readline zlib zlib-devel bash libmcrypt libmcrypt-devel kernel-headers kernel-devel libpcap open-vm-tools iftop touch --skip-broken
 sudo yum -y install GeoIP GeoIP-devel --disablerepo=rpmforge --skip-broken
 
 sudo wget https://browscap.org/stream?q=Full_PHP_BrowsCapINI -O full_php_browscap.ini
