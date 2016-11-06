@@ -1,3 +1,6 @@
+echo "Nombre del usuario actual: "
+read USER
+
 echo "Deshabilitando SElinux"
 sudo setsebool -P httpd_can_network_connect 1
 sudo setsebool -P httpd_can_network_connect_db 1
@@ -101,9 +104,9 @@ sudo systemctl restart firewalld.service
 
 #Desactivar Firewalld e instalar IPtables
 echo "Desactivar Firewalld e instalar IPtables? [Recomendado: NO]"
-select yn in "Yes" "No"; do
+select yn in "Si" "No"; do
   case $yn in
-    Yes ) 
+    Si ) 
       sudo systemctl mask firewalld
       sudo systemctl stop firewalld
       sudo yum -y install iptables-services
@@ -169,14 +172,10 @@ sudo mv -f php.ini /etc/
 sudo mv -f my.cnf /etc/
 
 #Instalar workbench community
-#echo "Please enter some input: "
-#read input_variable
-#echo "You entered: $input_variable"
-
 echo "Instalar Workbench community 6.3.8-1.el7.x86_64? "
-select yn in "Yes" "No"; do
+select yn in "Si" "No"; do
   case $yn in
-    Yes ) 
+    Si ) 
       sudo wget http://dev.mysql.com/get/Downloads/MySQLGUITools/mysql-workbench-community-6.3.8-1.el7.x86_64.rpm
       sudo yum -y install libodbc* libpq*
       sudo rpm -Uvh mysql-workbench-community*.rpm
@@ -195,8 +194,21 @@ echo "Acceder a webmin por 'https://0.0.0.0:10000'"
 sudo mkdir /usr/share/composer
 sudo mv -f compos.sh /usr/share/composer
 sudo chmod 0700 /usr/share/composer/compos.sh
-echo "No olvides reiniciar para que se deshabilite completamente SELinux"
-echo "Para instalar compose:"
-echo "1.- cd /usr/share/composer/"
-echo "2.- ./compos.sh"
-sudo rm -Rf /root/server/
+
+echo "Reiniciar ahora? [Recomendado: SI]"
+select yn in "Si" "No"; do
+  case $yn in
+    Si ) 
+      sudo reboot now
+      break;;
+    No ) exit;;
+  esac
+done
+echo "Eliminando archivos innecesarios en: "$USER
+if [ "$USER" == "root" ]; then
+  echo "0"
+  sudo rm -Rf /root/server/
+else
+  echo "1"
+	sudo rm -Rf /home/$USER/server/
+fi
