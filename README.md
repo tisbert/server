@@ -3,6 +3,7 @@
     sudo yum -y upgrade
     sudo yum -y install binutils gcc make patch libgomp glibc-headers glibc-devel kernel-headers kernel-devel dkms bzip2
     sudo yum groupinstall "Development Tools"
+    sudo reboot now
 
 ### Paso 1 - Preparar CentOS
     cd /root
