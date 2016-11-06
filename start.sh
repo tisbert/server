@@ -72,10 +72,16 @@ sudo systemctl enable httpd.service
 #Configurando https (pendiente)
 sudo mkdir certificados/
 sudo openssl genrsa -out certificados/CA.key 4096
-echo "localhost"
+echo "########################################################################## IMPORTANTE"
+echo "####################################### Es el que se visualiza en el certificado"
+echo "####################################### Common Name: localhost"
+echo "##########################################################################"
 sudo openssl req -new -x509 -sha512 -days 1825 -key certificados/CA.key -out certificados/CA.crt
 sudo openssl genrsa -out certificados/IA.key 4096
-echo "localhost.localdomain"
+echo "########################################################################## IMPORTANTE"
+echo "####################################### Common Name tiene que ser diferente al anterior"
+echo "####################################### Common Name: localhost.localdomain"
+echo "##########################################################################"
 sudo openssl req -new -sha512 -key certificados/IA.key -out certificados/IA.csr
 sudo openssl x509 -req -sha512 -days 1825 -in certificados/IA.csr -CA certificados/CA.crt -CAkey certificados/CA.key -set_serial 01 -out certificados/IA.crt
 sudo openssl pkcs12 -export -out certificados/IA.p12 -inkey certificados/IA.key -in certificados/IA.crt -chain -CAfile certificados/CA.crt
