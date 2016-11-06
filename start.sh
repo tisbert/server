@@ -175,14 +175,14 @@ sudo mv -f my.cnf /etc/
 
 echo "Instalar Workbench community 6.3.8-1.el7.x86_64? "
 select yn in "Yes" "No"; do
-    case $yn in
-        Yes ) 
-        sudo wget http://dev.mysql.com/get/Downloads/MySQLGUITools/mysql-workbench-community-6.3.8-1.el7.x86_64.rpm
-	sudo yum -y install libodbc* libpq*
-	sudo rpm -Uvh mysql-workbench-community*.rpm
-        break;;
-        No ) exit;;
-    esac
+  case $yn in
+    Yes ) 
+    sudo wget http://dev.mysql.com/get/Downloads/MySQLGUITools/mysql-workbench-community-6.3.8-1.el7.x86_64.rpm
+  sudo yum -y install libodbc* libpq*
+  sudo rpm -Uvh mysql-workbench-community*.rpm
+    break;;
+    No ) exit;;
+  esac
 done
 
 #Finalizando instalación
