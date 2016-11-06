@@ -100,12 +100,20 @@ sudo firewall-cmd --permanent --add-port=10000/tcp
 sudo systemctl restart firewalld.service
 
 #Desactivar Firewalld e instalar IPtables
-#sudo systemctl mask firewalld
-#sudo systemctl stop firewalld
-#sudo yum -y install iptables-services
-#sudo systemctl enable iptables
-#sudo yum -y remove firewalld
-#sudo service iptables stop
+echo "Desactivar Firewalld e instalar IPtables? [Recomendado: NO]"
+select yn in "Yes" "No"; do
+  case $yn in
+    Yes ) 
+      sudo systemctl mask firewalld
+      sudo systemctl stop firewalld
+      sudo yum -y install iptables-services
+      sudo systemctl enable iptables
+      sudo yum -y remove firewalld
+      sudo service iptables stop
+      break;;
+    No ) exit;;
+  esac
+done
 
 #Install MySQL
 echo ""
@@ -161,9 +169,21 @@ sudo mv -f php.ini /etc/
 sudo mv -f my.cnf /etc/
 
 #Instalar workbench community
-sudo wget http://dev.mysql.com/get/Downloads/MySQLGUITools/mysql-workbench-community-6.3.8-1.el7.x86_64.rpm
-sudo yum -y install libodbc* libpq*
-sudo rpm -Uvh mysql-workbench-community*.rpm
+#echo "Please enter some input: "
+#read input_variable
+#echo "You entered: $input_variable"
+
+echo "Instalar Workbench community 6.3.8-1.el7.x86_64? "
+select yn in "Yes" "No"; do
+    case $yn in
+        Yes ) 
+        sudo wget http://dev.mysql.com/get/Downloads/MySQLGUITools/mysql-workbench-community-6.3.8-1.el7.x86_64.rpm
+	sudo yum -y install libodbc* libpq*
+	sudo rpm -Uvh mysql-workbench-community*.rpm
+        break;;
+        No ) exit;;
+    esac
+done
 
 #Finalizando instalación
 sudo systemctl restart httpd.service
