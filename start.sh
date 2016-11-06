@@ -70,29 +70,29 @@ sudo systemctl start httpd.service
 sudo systemctl enable httpd.service
 
 #Configurando https (pendiente)
-sudo mkdir certificados/
-sudo openssl genrsa -out certificados/CA.key 4096
+sudo mkdir /root/certificados/
+sudo openssl genrsa -out /root/certificados/CA.key 4096
 echo "########################################################################## IMPORTANTE"
 echo "####################################### Es el que se visualiza en el certificado"
 echo "####################################### Common Name: localhost"
 echo "##########################################################################"
-sudo openssl req -new -x509 -sha512 -days 1825 -key certificados/CA.key -out certificados/CA.crt
-sudo openssl genrsa -out certificados/IA.key 4096
+sudo openssl req -new -x509 -sha512 -days 1825 -key /root/certificados/CA.key -out /root/certificados/CA.crt
+sudo openssl genrsa -out /root/certificados/IA.key 4096
 echo "########################################################################## IMPORTANTE"
 echo "####################################### Common Name tiene que ser diferente al anterior"
 echo "####################################### Common Name: localhost.localdomain"
 echo "##########################################################################"
-sudo openssl req -new -sha512 -key certificados/IA.key -out certificados/IA.csr
-sudo openssl x509 -req -sha512 -days 1825 -in certificados/IA.csr -CA certificados/CA.crt -CAkey certificados/CA.key -set_serial 01 -out certificados/IA.crt
-sudo openssl pkcs12 -export -out certificados/IA.p12 -inkey certificados/IA.key -in certificados/IA.crt -chain -CAfile certificados/CA.crt
+sudo openssl req -new -sha512 -key /root/certificados/IA.key -out /root/certificados/IA.csr
+sudo openssl x509 -req -sha512 -days 1825 -in /root/certificados/IA.csr -CA /root/certificados/CA.crt -CAkey /root/certificados/CA.key -set_serial 01 -out /root/certificados/IA.crt
+sudo openssl pkcs12 -export -out /root/certificados/IA.p12 -inkey /root/certificados/IA.key -in /root/certificados/IA.crt -chain -CAfile /root//root/certificados/CA.crt
 sudo chmod -R 0400 certificados/
 sudo rm -Rf /etc/pki/tls/certs/CA.crt
 sudo rm -Rf /etc/pki/tls/certs/IA.crt
 sudo rm -Rf /etc/pki/tls/certs/CA.key
 sudo rm -Rf /etc/httpd/conf.d/ssl.conf
-sudo cp certificados/CA.crt /etc/pki/tls/certs/
-sudo cp certificados/IA.crt /etc/pki/tls/certs/
-sudo cp certificados/CA.key /etc/pki/tls/private/
+sudo cp /root/certificados/CA.crt /etc/pki/tls/certs/
+sudo cp /root/certificados/IA.crt /etc/pki/tls/certs/
+sudo cp /root/certificados/CA.key /etc/pki/tls/private/
 sudo cp ssl.conf /etc/httpd/conf.d/
 
 #Abrir puertos del firewalld
