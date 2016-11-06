@@ -9,7 +9,7 @@
     sudo git clone -b master https://github.com/WalterLuis/server.git
     cd server
     sudo chmod 0700 start.sh
-    sudo USER=root ./start.sh
+    sudo ./start.sh
 
 ### Paso 2 - Instalación -> composer
     cd /usr/share/composer
