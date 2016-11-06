@@ -124,7 +124,7 @@ select yn in "Si" "No"; do
       sudo yum -y remove firewalld
       sudo service iptables stop
       break;;
-    No ) exit;;
+    No ) break;;
   esac
 done
 
@@ -191,7 +191,7 @@ select yn in "Si" "No"; do
       sudo rpm -Uvh mysql-workbench-community*.rpm
       sudo rm -Rf mysql-workbench-community*.rpm
       break;;
-    No ) exit;;
+    No ) break;;
   esac
 done
 
