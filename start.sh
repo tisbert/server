@@ -88,8 +88,8 @@ echo ""
 echo "#################################################"
 sudo openssl req -new -sha512 -key /root/certificados/IA.key -out /root/certificados/IA.csr
 sudo openssl x509 -req -sha512 -days 1825 -in /root/certificados/IA.csr -CA /root/certificados/CA.crt -CAkey /root/certificados/CA.key -set_serial 01 -out /root/certificados/IA.crt
-sudo openssl pkcs12 -export -out /root/certificados/IA.p12 -inkey /root/certificados/IA.key -in /root/certificados/IA.crt -chain -CAfile /root//root/certificados/CA.crt
-sudo chmod -R 0400 certificados/
+sudo openssl pkcs12 -export -out /root/certificados/IA.p12 -inkey /root/certificados/IA.key -in /root/certificados/IA.crt -chain -CAfile /root/certificados/CA.crt
+sudo chmod -R 0400 /root/certificados/
 sudo rm -Rf /etc/pki/tls/certs/CA.crt
 sudo rm -Rf /etc/pki/tls/certs/IA.crt
 sudo rm -Rf /etc/pki/tls/certs/CA.key
