@@ -197,6 +197,20 @@ select yn in "Si" "No"; do
   esac
 done
 
+#Instalar Atom io
+echo "Instalar editor de texto Atom? "
+select yn in "Si" "No"; do
+  case $yn in
+    Si ) 
+      sudo wget https://github.com/atom/atom/releases/download/v1.12.5/atom.x86_64.rpm
+      sudo yum -y install lsb-core-noarch
+      sudo rpm -Uvh atom.x86_64.rpm
+      sudo rm -Rf atom.x86_64.rpm
+      break;;
+    No ) break;;
+  esac
+done
+
 #Finalizando instalación
 sudo systemctl restart httpd.service
 echo ""
