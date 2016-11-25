@@ -48,13 +48,14 @@ sudo echo "[Webmin]" >> /etc/yum.repos.d/webmin.repo
 sudo echo "name=Webmin Distribution Neutral" >> /etc/yum.repos.d/webmin.repo
 sudo echo "#baseurl=http://download.webmin.com/download/yum" >> /etc/yum.repos.d/webmin.repo
 sudo echo "mirrorlist=http://download.webmin.com/download/yum/mirrorlist" >> /etc/yum.repos.d/webmin.repo
-sudo echo "enabled=0" >> /etc/yum.repos.d/webmin.repo
+sudo echo "enabled=1" >> /etc/yum.repos.d/webmin.repo
 sudo wget http://www.webmin.com/jcameron-key.asc
 sudo rpm --import jcameron-key.asc
 #sudo yum clean all
 #sudo yum -y install webmin
-sudo wget http://prdownloads.sourceforge.net/webadmin/webmin-1.820-1.noarch.rpm
-sudo rpm -U webmin-1.820-1.noarch.rpm
+#sudo wget http://prdownloads.sourceforge.net/webadmin/webmin-1.820-1.noarch.rpm
+#sudo rpm -U webmin-1.820-1.noarch.rpm
+sudo yum -y install webmin --skip-broken
 sudo adduser webmin_root
 sudo passwd webmin_root
 sudo echo "webmin_root:x:0:::::::0:0" >> /etc/webmin/miniserv.users
@@ -151,7 +152,7 @@ echo ""
 echo "Instalando PHP"
 echo ""
 #sudo yum -y remove php*
-sudo yum -y install php56u php56u-pdo php56u-gd php56u-imap php56u-ldap php56u-xml php56u-intl php56u-soap php56u-mbstring php56u-pear php56u-mysql --skip-broken
+sudo yum -y install php56u php56u-pdo php56u-gd php56u-imap php56u-ldap php56u-xml php56u-intl php56u-soap php56u-mbstring php56u-pear php56u-mysql php56u-opcache --skip-broken
 sudo systemctl restart httpd.service
 sudo systemctl enable httpd.service
 
@@ -207,7 +208,7 @@ sudo mv -f compos.sh /usr/share/composer
 sudo chmod 0700 /usr/share/composer/compos.sh
 
 echo "Eliminando archivos innecesarios en: "$USER
-if [ "$USER" == "root" ]; then
+if [ "$USER" == "root" || "$USER" == "" ]; then
   sudo rm -Rf /root/server/
 else
   sudo rm -Rf /home/$USER/server/
