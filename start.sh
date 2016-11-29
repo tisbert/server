@@ -222,7 +222,7 @@ sudo mv -f compos.sh /usr/share/composer
 sudo chmod 0700 /usr/share/composer/compos.sh
 
 echo "Eliminando archivos innecesarios en: "$USER
-if [ "$USER" == "root" || "$USER" == "" ]; then
+if [ "$USER" == "root" ] || [ "$USER" == "" ]; then
   sudo rm -Rf /root/server/
 else
   sudo rm -Rf /home/$USER/server/
