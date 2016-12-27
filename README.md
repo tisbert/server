@@ -16,6 +16,5 @@
     sudo ./compos.sh
     
 ### Paso 3 - Instalación -> YetiForce
-    cd /var/www/html/
-    sudo git clone -b developer https://github.com/YetiForceCompany/YetiForceCRM.git .
-    sudo chown -hR apache:apache .
+    sudo git clone -b developer https://github.com/YetiForceCompany/YetiForceCRM.git /var/www/html/
+    sudo chown -hR apache:apache /var/www/html/
