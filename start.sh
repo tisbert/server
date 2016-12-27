@@ -178,7 +178,7 @@ sudo touch /etc/httpd/conf.d/welcome.conf
 sudo echo "#" >> /etc/httpd/conf.d/welcome.conf
 
 #Configuracion de PHP
-#sudo mv -f php.ini /etc/
+sudo mv -f php.ini /etc/
 
 #Configuracion de MySQL
 sudo mv -f my.cnf /etc/
