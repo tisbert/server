@@ -19,17 +19,16 @@ sudo yum -y install epel-release --skip-broken
 sudo wget https://centos7.iuscommunity.org/ius-release.rpm
 sudo rpm -Uvh ius-release*.rpm
 sudo rm -Rf ius-release.rpm
-sudo yum -y upgrade --skip-broken
 sudo yum clean all
 sudo yum -y upgrade --skip-broken
-sudo yum -y install yum-plugin-replace
-sudo yum -y replace --replace-with php56u php
+#sudo yum -y install yum-plugin-replace
+#sudo yum -y replace --replace-with php56u php
 
 #Install extras
 echo ""
 echo "Instalando extras"
 echo ""
-echo "Instalar acelerador de descargas 'AXEL'? [Recomendado: Si]"
+echo "Instalar acelerador de descargas 'AXEL'? [Recomendado: SI]"
 select yn in "Si" "No"; do
   case $yn in
     Si ) 
@@ -38,7 +37,7 @@ select yn in "Si" "No"; do
     No ) break;;
   esac
 done
-echo "Instalar extras? [Recomendado: Si]"
+echo "Instalar extras? [Recomendado: SI]"
 select yn in "Si" "No"; do
   case $yn in
     Si ) 
@@ -56,7 +55,7 @@ sudo mkdir /etc/extra
 sudo mv -f full_php_browscap.ini /etc/extra
 sudo chown -hR apache:apache /etc/extra/full_php_browscap.ini
 
-echo "Desactivar Firewalld e instalar IPtables? [Recomendado: NO]"
+echo "Instalar Webmin? [Recomendado: SI]"
 select yn in "Si" "No"; do
   case $yn in
     Si ) 
@@ -78,6 +77,16 @@ select yn in "Si" "No"; do
       #sudo wget http://prdownloads.sourceforge.net/webadmin/webmin-1.820-1.noarch.rpm
       #sudo rpm -U webmin-1.820-1.noarch.rpm
       sudo yum -y install webmin --skip-broken
+      sudo service webmin restart
+      break;;
+    No ) break;;
+  esac
+done
+
+echo "crear un usuario nuevo para Webmin? [Recomendado: SI]"
+select yn in "Si" "No"; do
+  case $yn in
+    Si ) 
       sudo adduser webmin
       sudo passwd webmin
       sudo echo "webmin:x:0:::::::0:0" >> /etc/webmin/miniserv.users
@@ -136,19 +145,6 @@ select yn in "Si" "No"; do
   esac
 done
 
-#Abrir puertos del firewalld
-echo ""
-echo "Abriendo puertos"
-echo ""
-sudo firewall-cmd --permanent --add-port=80/tcp
-sudo firewall-cmd --permanent --add-service http
-sudo firewall-cmd --permanent --add-port=443/tcp
-sudo firewall-cmd --permanent --add-service https
-sudo firewall-cmd --permanent --add-port=21/tcp
-sudo firewall-cmd --permanent --add-service=ftp
-sudo firewall-cmd --permanent --add-port=10000/tcp
-sudo systemctl restart firewalld.service
-
 #Desactivar Firewalld e instalar IPtables
 echo "Desactivar Firewalld e instalar IPtables? [Recomendado: NO]"
 select yn in "Si" "No"; do
@@ -161,7 +157,20 @@ select yn in "Si" "No"; do
       sudo yum -y remove firewalld
       sudo service iptables stop
       break;;
-    No ) break;;
+    No )
+      #Abrir puertos del firewalld
+      echo ""
+      echo "Abriendo puertos"
+      echo ""
+      sudo firewall-cmd --permanent --add-port=80/tcp
+      sudo firewall-cmd --permanent --add-service http
+      sudo firewall-cmd --permanent --add-port=443/tcp
+      sudo firewall-cmd --permanent --add-service https
+      sudo firewall-cmd --permanent --add-port=21/tcp
+      sudo firewall-cmd --permanent --add-service=ftp
+      sudo firewall-cmd --permanent --add-port=10000/tcp
+      sudo systemctl restart firewalld.service
+      break;;
   esac
 done
 
