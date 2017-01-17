@@ -38,29 +38,29 @@ sudo mkdir /etc/extra
 sudo mv -f full_php_browscap.ini /etc/extra
 sudo chown -hR apache:apache /etc/extra/full_php_browscap.ini
 
-#Install webmin
-echo ""
-echo "Instalando webmin"
-echo ""
-sudo rm -Rf /etc/yum.repos.d/webmin.repo
-sudo touch /etc/yum.repos.d/webmin.repo
-sudo echo "[Webmin]" >> /etc/yum.repos.d/webmin.repo
-sudo echo "name=Webmin Distribution Neutral" >> /etc/yum.repos.d/webmin.repo
-sudo echo "#baseurl=http://download.webmin.com/download/yum" >> /etc/yum.repos.d/webmin.repo
-sudo echo "mirrorlist=http://download.webmin.com/download/yum/mirrorlist" >> /etc/yum.repos.d/webmin.repo
-sudo echo "enabled=1" >> /etc/yum.repos.d/webmin.repo
-sudo wget http://www.webmin.com/jcameron-key.asc
-sudo rpm --import jcameron-key.asc
-#sudo yum clean all
-#sudo yum -y install webmin
-#sudo wget http://prdownloads.sourceforge.net/webadmin/webmin-1.820-1.noarch.rpm
-#sudo rpm -U webmin-1.820-1.noarch.rpm
-sudo yum -y install webmin --skip-broken
-sudo adduser webmin_root
-sudo passwd webmin_root
-sudo echo "webmin_root:x:0:::::::0:0" >> /etc/webmin/miniserv.users
-sudo echo "webmin_root: backup-config change-user webmincron usermin webminlog webmin servers acl bacula-backup init passwd quota mount fsdump inittab ldap-client ldap-useradmin logrotate mailcap mon pam proc at cron package-updates software man syslog syslog-ng system-status useradmin apache bind8 dhcpd dovecot exim fetchmail jabber ldap-server mysql openslp postfix postgresql proftpd procmail qmailadmin mailboxes sshd samba sendmail spam squid sarg wuftpd webalizer adsl-client bandwidth fail2ban firewalld ipsec krb5 firewall firewall6 exports nis net xinetd inetd pap ppp-client pptp-client pptp-server stunnel shorewall shorewall6 tcpwrappers idmapd filter burner grub raid lvm fdisk lpadmin smart-status time vgetty iscsi-client iscsi-server iscsi-tgtd iscsi-target cluster-passwd cluster-copy cluster-cron cluster-shell cluster-software cluster-usermin cluster-useradmin cluster-webmin heartbeat shell custom filemin tunnel file phpini cpan htaccess-htpasswd telnet status ajaxterm updown dfsadmin ipfilter ipfw smf" >> /etc/webmin/webmin.acl
-sudo service webmin restart
+##Install webmin
+#echo ""
+#echo "Instalando webmin"
+#echo ""
+#sudo rm -Rf /etc/yum.repos.d/webmin.repo
+#sudo touch /etc/yum.repos.d/webmin.repo
+#sudo echo "[Webmin]" >> /etc/yum.repos.d/webmin.repo
+#sudo echo "name=Webmin Distribution Neutral" >> /etc/yum.repos.d/webmin.repo
+#sudo echo "#baseurl=http://download.webmin.com/download/yum" >> /etc/yum.repos.d/webmin.repo
+#sudo echo "mirrorlist=http://download.webmin.com/download/yum/mirrorlist" >> /etc/yum.repos.d/webmin.repo
+#sudo echo "enabled=1" >> /etc/yum.repos.d/webmin.repo
+#sudo wget http://www.webmin.com/jcameron-key.asc
+#sudo rpm --import jcameron-key.asc
+##sudo yum clean all
+##sudo yum -y install webmin
+##sudo wget http://prdownloads.sourceforge.net/webadmin/webmin-1.820-1.noarch.rpm
+##sudo rpm -U webmin-1.820-1.noarch.rpm
+#sudo yum -y install webmin --skip-broken
+#sudo adduser webmin_root
+#sudo passwd webmin_root
+#sudo echo "webmin_root:x:0:::::::0:0" >> /etc/webmin/miniserv.users
+#sudo echo "webmin_root: backup-config change-user webmincron usermin webminlog webmin servers acl bacula-backup init passwd quota mount fsdump inittab ldap-client ldap-useradmin logrotate mailcap mon pam proc at cron package-updates software man syslog syslog-ng system-status useradmin apache bind8 dhcpd dovecot exim fetchmail jabber ldap-server mysql openslp postfix postgresql proftpd procmail qmailadmin mailboxes sshd samba sendmail spam squid sarg wuftpd webalizer adsl-client bandwidth fail2ban firewalld ipsec krb5 firewall firewall6 exports nis net xinetd inetd pap ppp-client pptp-client pptp-server stunnel shorewall shorewall6 tcpwrappers idmapd filter burner grub raid lvm fdisk lpadmin smart-status time vgetty iscsi-client iscsi-server iscsi-tgtd iscsi-target cluster-passwd cluster-copy cluster-cron cluster-shell cluster-software cluster-usermin cluster-useradmin cluster-webmin heartbeat shell custom filemin tunnel file phpini cpan htaccess-htpasswd telnet status ajaxterm updown dfsadmin ipfilter ipfw smf" >> /etc/webmin/webmin.acl
+#sudo service webmin restart
 
 #Install APACHE
 echo ""
