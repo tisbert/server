@@ -178,10 +178,10 @@ sudo touch /etc/httpd/conf.d/welcome.conf
 sudo echo "#" >> /etc/httpd/conf.d/welcome.conf
 
 #Configuracion de PHP
-sudo mv -f php.ini /etc/
+#sudo mv -f php.ini /etc/
 
 #Configuracion de MySQL
-sudo mv -f my.cnf /etc/
+#sudo mv -f my.cnf /etc/
 
 #Instalar workbench community
 echo "Instalar Workbench community 6.3.8-1.el7.x86_64? "
