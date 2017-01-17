@@ -29,8 +29,26 @@ sudo yum -y replace --replace-with php56u php
 echo ""
 echo "Instalando extras"
 echo ""
-sudo yum -y install axel --skip-broken
-sudo yum -y install dkms nano bzip2 libzip python2-paramiko proj tinyxml bzip2-devel openssl openssl-devel mod_ssl wget lynx bc grep awk unzip bc coreutils file dos2unix ioping curl libcurl libcurl-devel autoconf automake cmake freetype-devel gcc gcc-c++ libtool make mercurial nasm pkgconfig zlib-devel yasm yasm-devel numactl-devel pwgen patch readline zlib zlib-devel bash libmcrypt libmcrypt-devel kernel-headers kernel-devel libpcap open-vm-tools iftop touch --skip-broken
+echo "Instalar acelerador de descargas 'AXEL'? [Recomendado: Si]"
+select yn in "Si" "No"; do
+  case $yn in
+    Si ) 
+      sudo yum -y install axel --skip-broken
+      break;;
+    No ) break;;
+  esac
+done
+echo "Instalar extras? [Recomendado: Si]"
+select yn in "Si" "No"; do
+  case $yn in
+    Si ) 
+      sudo yum -y install dkms nano bzip2 libzip python2-paramiko proj tinyxml bzip2-devel openssl openssl-devel wget lynx bc grep awk unzip bc coreutils file dos2unix ioping curl libcurl libcurl-devel autoconf automake cmake freetype-devel gcc gcc-c++ libtool make mercurial nasm pkgconfig zlib-devel yasm yasm-devel numactl-devel pwgen patch readline zlib zlib-devel bash libmcrypt libmcrypt-devel kernel-headers kernel-devel libpcap open-vm-tools iftop touch --skip-broken
+      break;;
+    No )
+      sudo yum -y install nano bzip2 libzip tinyxml bzip2-devel openssl wget bc grep awk unzip bc coreutils file dos2unix ioping curl libcurl autoconf automake cmake freetype-devel gcc gcc-c++ libtool make mercurial nasm pkgconfig zlib-devel yasm pwgen patch readline zlib bash libmcrypt libpcap iftop touch --skip-broken
+      break;;
+  esac
+done
 sudo yum -y install GeoIP GeoIP-devel --disablerepo=rpmforge --skip-broken
 
 sudo wget https://browscap.org/stream?q=Full_PHP_BrowsCapINI -O full_php_browscap.ini
@@ -38,29 +56,37 @@ sudo mkdir /etc/extra
 sudo mv -f full_php_browscap.ini /etc/extra
 sudo chown -hR apache:apache /etc/extra/full_php_browscap.ini
 
-##Install webmin
-#echo ""
-#echo "Instalando webmin"
-#echo ""
-#sudo rm -Rf /etc/yum.repos.d/webmin.repo
-#sudo touch /etc/yum.repos.d/webmin.repo
-#sudo echo "[Webmin]" >> /etc/yum.repos.d/webmin.repo
-#sudo echo "name=Webmin Distribution Neutral" >> /etc/yum.repos.d/webmin.repo
-#sudo echo "#baseurl=http://download.webmin.com/download/yum" >> /etc/yum.repos.d/webmin.repo
-#sudo echo "mirrorlist=http://download.webmin.com/download/yum/mirrorlist" >> /etc/yum.repos.d/webmin.repo
-#sudo echo "enabled=1" >> /etc/yum.repos.d/webmin.repo
-#sudo wget http://www.webmin.com/jcameron-key.asc
-#sudo rpm --import jcameron-key.asc
-##sudo yum clean all
-##sudo yum -y install webmin
-##sudo wget http://prdownloads.sourceforge.net/webadmin/webmin-1.820-1.noarch.rpm
-##sudo rpm -U webmin-1.820-1.noarch.rpm
-#sudo yum -y install webmin --skip-broken
-#sudo adduser webmin_root
-#sudo passwd webmin_root
-#sudo echo "webmin_root:x:0:::::::0:0" >> /etc/webmin/miniserv.users
-#sudo echo "webmin_root: backup-config change-user webmincron usermin webminlog webmin servers acl bacula-backup init passwd quota mount fsdump inittab ldap-client ldap-useradmin logrotate mailcap mon pam proc at cron package-updates software man syslog syslog-ng system-status useradmin apache bind8 dhcpd dovecot exim fetchmail jabber ldap-server mysql openslp postfix postgresql proftpd procmail qmailadmin mailboxes sshd samba sendmail spam squid sarg wuftpd webalizer adsl-client bandwidth fail2ban firewalld ipsec krb5 firewall firewall6 exports nis net xinetd inetd pap ppp-client pptp-client pptp-server stunnel shorewall shorewall6 tcpwrappers idmapd filter burner grub raid lvm fdisk lpadmin smart-status time vgetty iscsi-client iscsi-server iscsi-tgtd iscsi-target cluster-passwd cluster-copy cluster-cron cluster-shell cluster-software cluster-usermin cluster-useradmin cluster-webmin heartbeat shell custom filemin tunnel file phpini cpan htaccess-htpasswd telnet status ajaxterm updown dfsadmin ipfilter ipfw smf" >> /etc/webmin/webmin.acl
-#sudo service webmin restart
+echo "Desactivar Firewalld e instalar IPtables? [Recomendado: NO]"
+select yn in "Si" "No"; do
+  case $yn in
+    Si ) 
+      #Install webmin
+      echo ""
+      echo "Instalando webmin"
+      echo ""
+      sudo rm -Rf /etc/yum.repos.d/webmin.repo
+      sudo touch /etc/yum.repos.d/webmin.repo
+      sudo echo "[Webmin]" >> /etc/yum.repos.d/webmin.repo
+      sudo echo "name=Webmin Distribution Neutral" >> /etc/yum.repos.d/webmin.repo
+      sudo echo "#baseurl=http://download.webmin.com/download/yum" >> /etc/yum.repos.d/webmin.repo
+      sudo echo "mirrorlist=http://download.webmin.com/download/yum/mirrorlist" >> /etc/yum.repos.d/webmin.repo
+      sudo echo "enabled=1" >> /etc/yum.repos.d/webmin.repo
+      sudo wget http://www.webmin.com/jcameron-key.asc
+      sudo rpm --import jcameron-key.asc
+      #sudo yum clean all
+      #sudo yum -y install webmin
+      #sudo wget http://prdownloads.sourceforge.net/webadmin/webmin-1.820-1.noarch.rpm
+      #sudo rpm -U webmin-1.820-1.noarch.rpm
+      sudo yum -y install webmin --skip-broken
+      sudo adduser webmin
+      sudo passwd webmin
+      sudo echo "webmin:x:0:::::::0:0" >> /etc/webmin/miniserv.users
+      sudo echo "webmin: backup-config change-user webmincron usermin webminlog webmin servers acl bacula-backup init passwd quota mount fsdump inittab ldap-client ldap-useradmin logrotate mailcap mon pam proc at cron package-updates software man syslog syslog-ng system-status useradmin apache bind8 dhcpd dovecot exim fetchmail jabber ldap-server mysql openslp postfix postgresql proftpd procmail qmailadmin mailboxes sshd samba sendmail spam squid sarg wuftpd webalizer adsl-client bandwidth fail2ban firewalld ipsec krb5 firewall firewall6 exports nis net xinetd inetd pap ppp-client pptp-client pptp-server stunnel shorewall shorewall6 tcpwrappers idmapd filter burner grub raid lvm fdisk lpadmin smart-status time vgetty iscsi-client iscsi-server iscsi-tgtd iscsi-target cluster-passwd cluster-copy cluster-cron cluster-shell cluster-software cluster-usermin cluster-useradmin cluster-webmin heartbeat shell custom filemin tunnel file phpini cpan htaccess-htpasswd telnet status ajaxterm updown dfsadmin ipfilter ipfw smf" >> /etc/webmin/webmin.acl
+      sudo service webmin restart
+      break;;
+    No ) break;;
+  esac
+done
 
 #Install APACHE
 echo ""
@@ -72,34 +98,43 @@ sudo systemctl start httpd.service
 sudo systemctl enable httpd.service
 
 #Configurando https (pendiente)
-sudo mkdir /root/certificados/
-sudo openssl genrsa -out /root/certificados/CA.key 4096
-echo "################################################# IMPORTANTE"
-echo ""
-echo "#################### Es el que se visualiza en el certificado"
-echo "#################### Common Name: localhost"
-echo ""
-echo "#################################################"
-sudo openssl req -new -x509 -sha512 -days 1825 -key /root/certificados/CA.key -out /root/certificados/CA.crt
-sudo openssl genrsa -out /root/certificados/IA.key 4096
-echo "################################################# IMPORTANTE"
-echo ""
-echo "#################### Common Name tiene que ser diferente al anterior"
-echo "#################### Common Name: localhost.localdomain"
-echo ""
-echo "#################################################"
-sudo openssl req -new -sha512 -key /root/certificados/IA.key -out /root/certificados/IA.csr
-sudo openssl x509 -req -sha512 -days 1825 -in /root/certificados/IA.csr -CA /root/certificados/CA.crt -CAkey /root/certificados/CA.key -set_serial 01 -out /root/certificados/IA.crt
-sudo openssl pkcs12 -export -out /root/certificados/IA.p12 -inkey /root/certificados/IA.key -in /root/certificados/IA.crt -chain -CAfile /root/certificados/CA.crt
-sudo chmod -R 0400 /root/certificados/
-sudo rm -Rf /etc/pki/tls/certs/CA.crt
-sudo rm -Rf /etc/pki/tls/certs/IA.crt
-sudo rm -Rf /etc/pki/tls/certs/CA.key
-sudo rm -Rf /etc/httpd/conf.d/ssl.conf
-sudo cp /root/certificados/CA.crt /etc/pki/tls/certs/
-sudo cp /root/certificados/IA.crt /etc/pki/tls/certs/
-sudo cp /root/certificados/CA.key /etc/pki/tls/private/
-sudo cp ssl.conf /etc/httpd/conf.d/
+echo "Activar https? [Recomendado: NO]"
+select yn in "Si" "No"; do
+  case $yn in
+    Si ) 
+      yum install -y mod_ssl
+      sudo mkdir /root/certificados/
+      sudo openssl genrsa -out /root/certificados/CA.key 4096
+      echo "################################################# IMPORTANTE"
+      echo ""
+      echo "#################### Es el que se visualiza en el certificado"
+      echo "#################### Common Name: localhost"
+      echo ""
+      echo "#################################################"
+      sudo openssl req -new -x509 -sha512 -days 1825 -key /root/certificados/CA.key -out /root/certificados/CA.crt
+      sudo openssl genrsa -out /root/certificados/IA.key 4096
+      echo "################################################# IMPORTANTE"
+      echo ""
+      echo "#################### Common Name tiene que ser diferente al anterior"
+      echo "#################### Common Name: localhost.localdomain"
+      echo ""
+      echo "#################################################"
+      sudo openssl req -new -sha512 -key /root/certificados/IA.key -out /root/certificados/IA.csr
+      sudo openssl x509 -req -sha512 -days 1825 -in /root/certificados/IA.csr -CA /root/certificados/CA.crt -CAkey /root/certificados/CA.key -set_serial 01 -out /root/certificados/IA.crt
+      sudo openssl pkcs12 -export -out /root/certificados/IA.p12 -inkey /root/certificados/IA.key -in /root/certificados/IA.crt -chain -CAfile /root/certificados/CA.crt
+      sudo chmod -R 0400 /root/certificados/
+      sudo rm -Rf /etc/pki/tls/certs/CA.crt
+      sudo rm -Rf /etc/pki/tls/certs/IA.crt
+      sudo rm -Rf /etc/pki/tls/certs/CA.key
+      sudo rm -Rf /etc/httpd/conf.d/ssl.conf
+      sudo cp /root/certificados/CA.crt /etc/pki/tls/certs/
+      sudo cp /root/certificados/IA.crt /etc/pki/tls/certs/
+      sudo cp /root/certificados/CA.key /etc/pki/tls/private/
+      sudo cp ssl.conf /etc/httpd/conf.d/
+      break;;
+    No ) break;;
+  esac
+done
 
 #Abrir puertos del firewalld
 echo ""
