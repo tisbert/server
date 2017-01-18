@@ -25,9 +25,6 @@ sudo yum -y upgrade --skip-broken
 #sudo yum -y replace --replace-with php56u php
 
 #Install extras
-echo ""
-echo "Instalando extras"
-echo ""
 echo "Instalar acelerador de descargas 'AXEL'? [Recomendado: SI]"
 select yn in "Si" "No"; do
   case $yn in
@@ -37,14 +34,20 @@ select yn in "Si" "No"; do
     No ) break;;
   esac
 done
-echo "Instalar extras? [Recomendado: SI]"
+echo "Instalar extras? [Recomendado: NO]"
 select yn in "Si" "No"; do
   case $yn in
     Si ) 
+      echo ""
+      echo "Instalando extras"
+      echo ""
       sudo yum -y install dkms nano bzip2 libzip python2-paramiko proj tinyxml bzip2-devel openssl openssl-devel wget lynx bc grep awk unzip bc coreutils file dos2unix ioping curl libcurl libcurl-devel autoconf automake cmake freetype-devel gcc gcc-c++ libtool make mercurial nasm pkgconfig zlib-devel yasm yasm-devel numactl-devel pwgen patch readline zlib zlib-devel bash libmcrypt libmcrypt-devel kernel-headers kernel-devel libpcap open-vm-tools iftop touch --skip-broken
       break;;
     No )
-      sudo yum -y install nano bzip2 libzip tinyxml bzip2-devel openssl wget bc grep awk unzip bc coreutils file dos2unix ioping curl libcurl autoconf automake cmake freetype-devel gcc gcc-c++ libtool make mercurial nasm pkgconfig zlib-devel yasm pwgen patch readline zlib bash libmcrypt libpcap iftop touch --skip-broken
+      echo ""
+      echo "Instalando lo necesario"
+      echo ""
+      sudo yum -y install nano openssl wget bc grep awk unzip bc file curl libcurl automake cmake gcc gcc-c++ make nasm pwgen patch zlib bash libmcrypt libpcap iftop touch --skip-broken
       break;;
   esac
 done
