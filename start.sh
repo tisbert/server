@@ -47,7 +47,7 @@ select yn in "Si" "No"; do
       echo ""
       echo "Instalando lo necesario"
       echo ""
-      sudo yum -y install nano openssl wget bc grep awk unzip bc file curl libcurl automake cmake gcc gcc-c++ make nasm pwgen patch zlib bash libmcrypt libpcap iftop touch --skip-broken
+      sudo yum -y install nano openssl curl libcurl pwgen libmcrypt iftop touch --skip-broken
       break;;
   esac
 done
