@@ -56,7 +56,7 @@ sudo yum -y install GeoIP GeoIP-devel --disablerepo=rpmforge --skip-broken
 sudo wget https://browscap.org/stream?q=Full_PHP_BrowsCapINI -O full_php_browscap.ini
 sudo mkdir /etc/extra
 sudo mv -f full_php_browscap.ini /etc/extra
-sudo chown -hR apache:apache /etc/extra/full_php_browscap.ini
+#sudo chown -hR apache:apache /etc/extra/full_php_browscap.ini
 
 echo "Instalar Webmin? [Recomendado: SI]"
 select yn in "Si" "No"; do
