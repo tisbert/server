@@ -24,6 +24,9 @@ sudo yum -y upgrade --skip-broken
 #sudo yum -y install yum-plugin-replace
 #sudo yum -y replace --replace-with php56u php
 
+#Desinstalando mariadb
+sudo yum -y remove mariadb*
+
 #Install extras
 echo "Instalar acelerador de descargas 'AXEL'? [Recomendado: SI]"
 select yn in "Si" "No"; do
@@ -181,7 +184,8 @@ done
 echo ""
 echo "Instalando MySQL"
 echo ""
-sudo yum -y install mariadb-server mariadb mariadb-libs --skip-broken
+sudo yum -y install mariadb101u mariadb101u-server mariadb101u-libs mariadb101u-common --skip-broken
+#sudo yum -y install mariadb-server mariadb mariadb-libs --skip-broken
 sudo systemctl start mariadb.service
 sudo systemctl enable mariadb.service
 dbpass=$(pwgen -1cnys 24)
