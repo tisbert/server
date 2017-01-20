@@ -54,7 +54,7 @@ select yn in "Si" "No"; do
       break;;
   esac
 done
-sudo yum -y install GeoIP GeoIP-devel --disablerepo=rpmforge --skip-broken
+#sudo yum -y install GeoIP GeoIP-devel --disablerepo=rpmforge --skip-broken
 
 sudo wget https://browscap.org/stream?q=Full_PHP_BrowsCapINI -O full_php_browscap.ini
 sudo mkdir /etc/extra
