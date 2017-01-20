@@ -78,10 +78,6 @@ select yn in "Si" "No"; do
       sudo echo "enabled=1" >> /etc/yum.repos.d/webmin.repo
       sudo wget http://www.webmin.com/jcameron-key.asc
       sudo rpm --import jcameron-key.asc
-      #sudo yum clean all
-      #sudo yum -y install webmin
-      #sudo wget http://prdownloads.sourceforge.net/webadmin/webmin-1.820-1.noarch.rpm
-      #sudo rpm -U webmin-1.820-1.noarch.rpm
       sudo yum -y install webmin --skip-broken
       sudo service webmin restart
       break;;
@@ -113,7 +109,7 @@ sudo systemctl start httpd.service
 sudo systemctl enable httpd.service
 
 #Configurando https (pendiente)
-echo "Activar https? [Recomendado: NO]"
+echo "Activar https? [Recomendado: NO][Estado: en pruebas]"
 select yn in "Si" "No"; do
   case $yn in
     Si ) 
@@ -185,7 +181,8 @@ echo ""
 echo "Instalando MySQL"
 echo ""
 sudo yum -y install mariadb101u mariadb101u-server mariadb101u-libs mariadb101u-common --skip-broken
-#sudo yum -y install mariadb-server mariadb mariadb-libs --skip-broken
+#mysql-conector-java para Spoon de Pentaho
+sudo yum -y install mysql-connector-java --skip-broken
 sudo systemctl start mariadb.service
 sudo systemctl enable mariadb.service
 dbpass=$(pwgen -1cnys 24)
@@ -253,7 +250,7 @@ echo "Instalar editor de texto Atom? "
 select yn in "Si" "No"; do
   case $yn in
     Si ) 
-      sudo wget https://github.com/atom/atom/releases/download/v1.12.5/atom.x86_64.rpm
+      sudo wget https://github.com/atom/atom/releases/download/v1.13.0/atom.x86_64.rpm
       sudo yum -y install lsb-core-noarch
       sudo rpm -Uvh atom.x86_64.rpm
       sudo rm -Rf atom.x86_64.rpm
