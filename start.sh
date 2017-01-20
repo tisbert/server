@@ -44,13 +44,13 @@ select yn in "Si" "No"; do
       echo ""
       echo "Instalando extras"
       echo ""
-      sudo yum -y install dkms nano bzip2 libzip python2-paramiko proj tinyxml bzip2-devel openssl openssl-devel wget lynx bc grep awk unzip bc coreutils file dos2unix ioping curl libcurl libcurl-devel autoconf automake cmake freetype-devel gcc gcc-c++ libtool make mercurial nasm pkgconfig zlib-devel yasm yasm-devel numactl-devel pwgen patch readline zlib zlib-devel bash libmcrypt libmcrypt-devel kernel-headers kernel-devel libpcap open-vm-tools iftop --skip-broken
+      sudo yum -y install dkms nano bzip2 libzip python2-paramiko proj tinyxml bzip2-devel openssl openssl-devel wget lynx bc grep unzip bc coreutils file dos2unix ioping curl libcurl libcurl-devel autoconf automake cmake freetype-devel gcc gcc-c++ libtool make mercurial nasm pkgconfig zlib-devel yasm yasm-devel numactl-devel pwgen patch readline zlib zlib-devel bash libmcrypt libmcrypt-devel kernel-headers kernel-devel libpcap open-vm-tools iftop --skip-broken
       break;;
     No )
       echo ""
       echo "Instalando lo necesario"
       echo ""
-      sudo yum -y install nano openssl curl libcurl pwgen libmcrypt iftop coreutils --skip-broken
+      sudo yum -y install nano openssl curl libcurl pwgen libmcrypt iftop coreutils tinyxml proj python2-paramiko libzip --skip-broken
       break;;
   esac
 done
@@ -103,49 +103,51 @@ done
 echo ""
 echo "Instalando APACHE"
 echo ""
-sudo yum -y install httpd --skip-broken
-sudo chown apache:apache /etc/extra/full_php_browscap.ini
-sudo systemctl start httpd.service
-sudo systemctl enable httpd.service
+#sudo yum -y install httpd --skip-broken
+sudo yum -y install httpd24u httpd24u-tools --skip-broken
 
 #Configurando https (pendiente)
 echo "Activar https? [Recomendado: NO][Estado: en pruebas]"
 select yn in "Si" "No"; do
   case $yn in
     Si ) 
-      yum install -y mod_ssl
-      sudo mkdir /root/certificados/
-      sudo openssl genrsa -out /root/certificados/CA.key 4096
-      echo "################################################# IMPORTANTE"
-      echo ""
-      echo "#################### Es el que se visualiza en el certificado"
-      echo "#################### Common Name: localhost"
-      echo ""
-      echo "#################################################"
-      sudo openssl req -new -x509 -sha512 -days 1825 -key /root/certificados/CA.key -out /root/certificados/CA.crt
-      sudo openssl genrsa -out /root/certificados/IA.key 4096
-      echo "################################################# IMPORTANTE"
-      echo ""
-      echo "#################### Common Name tiene que ser diferente al anterior"
-      echo "#################### Common Name: localhost.localdomain"
-      echo ""
-      echo "#################################################"
-      sudo openssl req -new -sha512 -key /root/certificados/IA.key -out /root/certificados/IA.csr
-      sudo openssl x509 -req -sha512 -days 1825 -in /root/certificados/IA.csr -CA /root/certificados/CA.crt -CAkey /root/certificados/CA.key -set_serial 01 -out /root/certificados/IA.crt
-      sudo openssl pkcs12 -export -out /root/certificados/IA.p12 -inkey /root/certificados/IA.key -in /root/certificados/IA.crt -chain -CAfile /root/certificados/CA.crt
-      sudo chmod -R 0400 /root/certificados/
-      sudo rm -Rf /etc/pki/tls/certs/CA.crt
-      sudo rm -Rf /etc/pki/tls/certs/IA.crt
-      sudo rm -Rf /etc/pki/tls/certs/CA.key
-      sudo rm -Rf /etc/httpd/conf.d/ssl.conf
-      sudo cp /root/certificados/CA.crt /etc/pki/tls/certs/
-      sudo cp /root/certificados/IA.crt /etc/pki/tls/certs/
-      sudo cp /root/certificados/CA.key /etc/pki/tls/private/
-      sudo cp ssl.conf /etc/httpd/conf.d/
+      sudo yum -y install httpd24u-mod_security2 httpd24u-mod_ssl --skip-broken
+      #yum install -y mod_ssl
+      #sudo mkdir /root/certificados/
+      #sudo openssl genrsa -out /root/certificados/CA.key 4096
+      #echo "################################################# IMPORTANTE"
+      #echo ""
+      #echo "#################### Es el que se visualiza en el certificado"
+      #echo "#################### Common Name: localhost"
+      #echo ""
+      #echo "#################################################"
+      #sudo openssl req -new -x509 -sha512 -days 1825 -key /root/certificados/CA.key -out /root/certificados/CA.crt
+      #sudo openssl genrsa -out /root/certificados/IA.key 4096
+      #echo "################################################# IMPORTANTE"
+      #echo ""
+      #echo "#################### Common Name tiene que ser diferente al anterior"
+      #echo "#################### Common Name: localhost.localdomain"
+      #echo ""
+      #echo "#################################################"
+      #sudo openssl req -new -sha512 -key /root/certificados/IA.key -out /root/certificados/IA.csr
+      #sudo openssl x509 -req -sha512 -days 1825 -in /root/certificados/IA.csr -CA /root/certificados/CA.crt -CAkey /root/certificados/CA.key -set_serial 01 -out /root/certificados/IA.crt
+      #sudo openssl pkcs12 -export -out /root/certificados/IA.p12 -inkey /root/certificados/IA.key -in /root/certificados/IA.crt -chain -CAfile /root/certificados/CA.crt
+      #sudo chmod -R 0400 /root/certificados/
+      #sudo rm -Rf /etc/pki/tls/certs/CA.crt
+      #sudo rm -Rf /etc/pki/tls/certs/IA.crt
+      #sudo rm -Rf /etc/pki/tls/certs/CA.key
+      #sudo rm -Rf /etc/httpd/conf.d/ssl.conf
+      #sudo cp /root/certificados/CA.crt /etc/pki/tls/certs/
+      #sudo cp /root/certificados/IA.crt /etc/pki/tls/certs/
+      #sudo cp /root/certificados/CA.key /etc/pki/tls/private/
+      #sudo cp ssl.conf /etc/httpd/conf.d/
       break;;
     No ) break;;
   esac
 done
+sudo systemctl start httpd.service
+sudo systemctl enable httpd.service
+sudo chown apache:apache /etc/extra/full_php_browscap.ini
 
 #Desactivar Firewalld e instalar IPtables
 echo "Desactivar Firewalld e instalar IPtables? [Recomendado: NO]"
@@ -236,8 +238,8 @@ echo "Instalar Workbench community 6.3.8-1.el7.x86_64? "
 select yn in "Si" "No"; do
   case $yn in
     Si ) 
-      sudo wget http://dev.mysql.com/get/Downloads/MySQLGUITools/mysql-workbench-community-6.3.8-1.el7.x86_64.rpm
       sudo yum -y install libodbc* libpq*
+      sudo wget http://dev.mysql.com/get/Downloads/MySQLGUITools/mysql-workbench-community-6.3.8-1.el7.x86_64.rpm
       sudo rpm -Uvh mysql-workbench-community*.rpm
       sudo rm -Rf mysql-workbench-community*.rpm
       break;;
@@ -250,6 +252,7 @@ echo "Instalar editor de texto Atom? "
 select yn in "Si" "No"; do
   case $yn in
     Si ) 
+      sudo yum -y install libX*
       sudo wget https://github.com/atom/atom/releases/download/v1.13.0/atom.x86_64.rpm
       sudo yum -y install lsb-core-noarch
       sudo rpm -Uvh atom.x86_64.rpm
