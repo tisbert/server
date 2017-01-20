@@ -28,15 +28,15 @@ sudo yum -y upgrade --skip-broken
 sudo yum -y remove mariadb*
 
 #Install extras
-echo "Instalar acelerador de descargas 'AXEL'? [Recomendado: SI]"
-select yn in "Si" "No"; do
-  case $yn in
-    Si ) 
-      sudo yum -y install axel --skip-broken
-      break;;
-    No ) break;;
-  esac
-done
+#echo "Instalar acelerador de descargas 'AXEL'? [Recomendado: SI]"
+#select yn in "Si" "No"; do
+#  case $yn in
+#    Si ) 
+#      sudo yum -y install axel --skip-broken
+#      break;;
+#    No ) break;;
+#  esac
+#done
 echo "Instalar extras? [Recomendado: NO]"
 select yn in "Si" "No"; do
   case $yn in
