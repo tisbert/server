@@ -11,6 +11,17 @@ sudo sed -i 's/SELINUX=permissive/SELINUX=disabled/g' '/etc/selinux/config'
 sudo setenforce 0
 sudo cat '/etc/selinux/config' | grep '^SELINUX='
 
+echo "¿Reiniciar ahora?"
+echo "recomendado SOLO después de deshabilitar SElinux [Recomendado: SI]"
+select yn in "Si" "No"; do
+  case $yn in
+    Si ) 
+      sudo reboot now
+      break;;
+    No ) exit;;
+  esac
+done
+
 #Install IUS y EPEL
 echo ""
 echo "Instalando IUS, EPEL"
@@ -278,13 +289,3 @@ if [ "$USER" == "root" ] || [ "$USER" == "" ]; then
 else
   sudo rm -Rf /home/$USER/server/
 fi
-
-echo "Reiniciar ahora? [Recomendado: SI]"
-select yn in "Si" "No"; do
-  case $yn in
-    Si ) 
-      sudo reboot now
-      break;;
-    No ) exit;;
-  esac
-done
