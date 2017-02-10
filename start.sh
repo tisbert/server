@@ -239,7 +239,28 @@ sudo touch /etc/httpd/conf.d/welcome.conf
 sudo echo "#" >> /etc/httpd/conf.d/welcome.conf
 
 #Configuracion de PHP
-#sudo mv -f php.ini /etc/
+sudo sed -i 's/short_open_tag = Off/short_open_tag = On;ADD/g' '/etc/php.ini'
+sudo sed -i 's/output_buffering = 4096/output_buffering = On;ADD/g' '/etc/php.ini'
+sudo sed -i 's/expose_php = On/expose_php = Off;ADD/g' '/etc/php.ini'
+sudo sed -i 's/max_execution_time = 30/max_execution_time = 10000;ADD/g' '/etc/php.ini'
+sudo sed -i 's/max_input_time = 60/max_input_time = 10000;ADD/g' '/etc/php.ini'
+sudo sed -i 's/; max_input_vars = 1000/max_input_vars = 10000;ADD/g' '/etc/php.ini'
+sudo sed -i 's/error_reporting = E_ALL \& \~E_DEPRECATED \& \~E_STRICT/error_reporting = E_COMPILE_ERROR\|E_RECOVERABLE_ERROR\|E_ERROR\|E_CORE_ERROR;ADD/g' '/etc/php.ini'
+sudo sed -i 's/log_errors = On/log_errors = Off;ADD/g' '/etc/php.ini'
+sudo sed -i 's/log_errors_max_len = 1024/log_errors_max_len = 0;ADD/g' '/etc/php.ini'
+sudo sed -i 's/report_memleaks = On/report_memleaks = Off;ADD/g' '/etc/php.ini'
+sudo sed -i 's/html_errors = On/html_errors = Off;ADD/g' '/etc/php.ini'
+sudo sed -i 's/post_max_size = 8M/post_max_size = 128M;ADD/g' '/etc/php.ini'
+sudo sed -i 's/upload_max_filesize = 2M/upload_max_filesize = 128M;ADD/g' '/etc/php.ini'
+sudo sed -i 's/default_socket_timeout = 60/default_socket_timeout = 600;ADD/g' '/etc/php.ini'
+sudo sed -i 's/;date.timezone =/date.timezone = Atlantic\/Canary;ADD/g' '/etc/php.ini'
+sudo sed -i 's/;date.default_latitude = 31.7667/date.default_latitude = 28.4716;ADD/g' '/etc/php.ini'
+sudo sed -i 's/;date.default_longitude = 35.2333/date.default_longitude = -16.2472;ADD/g' '/etc/php.ini'
+sudo sed -i 's/mysql.connect_timeout = 60/mysql.connect_timeout = 600;ADD/g' '/etc/php.ini'
+sudo sed -i 's/;browscap = extra\/browscap.ini/browscap = \/etc\/extra\/full_php_browscap.ini;ADD/g' '/etc/php.ini'
+sudo sed -i 's/session.name = PHPSESSID/session.name = ITOP_SESSID;ADD/g' '/etc/php.ini'
+sudo sed -i 's/session.gc_maxlifetime = 1440/session.gc_maxlifetime = 86400;ADD/g' '/etc/php.ini'
+sudo sed -i 's/;mbstring.func_overload = 0/mbstring.func_overload = 7;ADD/g' '/etc/php.ini'
 
 #Configuracion de MySQL
 #sudo mv -f my.cnf /etc/
