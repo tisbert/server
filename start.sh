@@ -239,7 +239,7 @@ select yn in "Si" "No"; do
   case $yn in
     Si ) 
       sudo yum -y install libodbc* libpq*
-      sudo wget http://dev.mysql.com/get/Downloads/MySQLGUITools/mysql-workbench-community-6.3.8-1.el7.x86_64.rpm
+      sudo wget https://dev.mysql.com/get/Downloads/MySQLGUITools/mysql-workbench-community-6.3.9-1.el7.x86_64.rpm
       sudo rpm -Uvh mysql-workbench-community*.rpm
       sudo rm -Rf mysql-workbench-community*.rpm
       break;;
@@ -253,7 +253,7 @@ select yn in "Si" "No"; do
   case $yn in
     Si ) 
       sudo yum -y install libX*
-      sudo wget https://github.com/atom/atom/releases/download/v1.13.0/atom.x86_64.rpm
+      sudo wget https://github.com/atom/atom/releases/download/v1.14.1/atom.x86_64.rpm
       sudo yum -y install lsb-core-noarch
       sudo rpm -Uvh atom.x86_64.rpm
       sudo rm -Rf atom.x86_64.rpm
