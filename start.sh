@@ -18,7 +18,7 @@ select yn in "Si" "No"; do
     Si ) 
       sudo reboot now
       break;;
-    No ) exit;;
+    No ) break;;
   esac
 done
 
