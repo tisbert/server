@@ -114,16 +114,16 @@ done
 echo ""
 echo "Instalando APACHE"
 echo ""
-#sudo yum -y install httpd --skip-broken
-sudo yum -y install httpd24u httpd24u-tools --skip-broken
+sudo yum -y install httpd --skip-broken
+#sudo yum -y install httpd24u httpd24u-tools --skip-broken
 
 #Configurando https (pendiente)
 echo "Activar https? [Recomendado: NO][Estado: en pruebas]"
 select yn in "Si" "No"; do
   case $yn in
     Si ) 
-      sudo yum -y install httpd24u-mod_security2 httpd24u-mod_ssl --skip-broken
-      #yum install -y mod_ssl
+      #sudo yum -y install httpd24u-mod_security2 httpd24u-mod_ssl --skip-broken
+      sudo yum install -y mod_ssl
       #sudo mkdir /root/certificados/
       #sudo openssl genrsa -out /root/certificados/CA.key 4096
       #echo "################################################# IMPORTANTE"
@@ -193,7 +193,8 @@ done
 echo ""
 echo "Instalando MySQL"
 echo ""
-sudo yum -y install mariadb101u mariadb101u-server mariadb101u-libs mariadb101u-common --skip-broken
+#sudo yum -y install mariadb101u mariadb101u-server mariadb101u-libs mariadb101u-common --skip-broken
+yum -y install mariadb mariadb-server mariadb-libs mariadb-common --skip-broken
 #mysql-conector-java para Spoon de Pentaho
 sudo yum -y install mysql-connector-java --skip-broken
 sudo systemctl start mariadb.service
