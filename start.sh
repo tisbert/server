@@ -61,7 +61,7 @@ select yn in "Si" "No"; do
       echo ""
       echo "Instalando lo necesario"
       echo ""
-      sudo yum -y install libsodium nano openssl curl libcurl pwgen libmcrypt iftop coreutils tinyxml proj python2-paramiko libzip --skip-broken
+      sudo yum -y install nano openssl curl libcurl pwgen libmcrypt iftop coreutils tinyxml proj python2-paramiko libzip --skip-broken
       break;;
   esac
 done
@@ -151,9 +151,9 @@ echo ""
 echo "Instalando MySQL"
 echo ""
 #sudo yum -y install mariadb101u mariadb101u-server mariadb101u-libs mariadb101u-common --skip-broken
-yum -y install mariadb mariadb-server mariadb-libs mariadb-common --skip-broken
+yum -y install mariadb mariadb-server --skip-broken
 #mysql-conector-java para Spoon de Pentaho
-sudo yum -y install mysql-connector-java --skip-broken
+#sudo yum -y install mysql-connector-java --skip-broken
 sudo systemctl start mariadb.service
 sudo systemctl enable mariadb.service
 dbpass=$(pwgen -1cnys 24)
@@ -231,7 +231,7 @@ select yn in "Si" "No"; do
       #sudo cp /root/certificados/IA.crt /etc/pki/tls/certs/
       #sudo cp /root/certificados/CA.key /etc/pki/tls/private/
       #sudo cp ssl.conf /etc/httpd/conf.d/
-      sudo sed -i 's/;session.cookie_secure =/session.cookie_secure = 1;ADD/g' '/etc/php.ini'
+      sudo sed -i 's/;session.cookie_secure =/session.cookie_secure = 1/g' '/etc/php.ini'
       break;;
     No ) break;;
   esac
@@ -241,30 +241,30 @@ sudo systemctl enable httpd.service
 sudo chown apache:apache /etc/extra/full_php_browscap.ini
 
 #Configuracion de PHP
-sudo sed -i 's/short_open_tag = Off/short_open_tag = On;ADD/g' '/etc/php.ini'
-sudo sed -i 's/output_buffering = 4096/output_buffering = On;ADD/g' '/etc/php.ini'
-sudo sed -i 's/expose_php = On/expose_php = Off;ADD/g' '/etc/php.ini'
-sudo sed -i 's/max_execution_time = 30/max_execution_time = 10000;ADD/g' '/etc/php.ini'
-sudo sed -i 's/max_input_time = 60/max_input_time = 10000;ADD/g' '/etc/php.ini'
-sudo sed -i 's/; max_input_vars = 1000/max_input_vars = 10000;ADD/g' '/etc/php.ini'
-sudo sed -i 's/memory_limit = 128M/memory_limit = 1024M;ADD/g' '/etc/php.ini'
-sudo sed -i 's/error_reporting = E_ALL \& \~E_DEPRECATED \& \~E_STRICT/error_reporting = E_WARNING \& E_ERROR \& \~E_NOTICE \& \~E_DEPRECATED \& \~E_STRICT;ADD/g' '/etc/php.ini'
-sudo sed -i 's/log_errors = On/log_errors = Off;ADD/g' '/etc/php.ini'
-sudo sed -i 's/log_errors_max_len = 1024/log_errors_max_len = 0;ADD/g' '/etc/php.ini'
-sudo sed -i 's/report_memleaks = On/report_memleaks = Off;ADD/g' '/etc/php.ini'
-sudo sed -i 's/html_errors = On/html_errors = Off;ADD/g' '/etc/php.ini'
-sudo sed -i 's/post_max_size = 8M/post_max_size = 64M;ADD/g' '/etc/php.ini'
-sudo sed -i 's/upload_max_filesize = 2M/upload_max_filesize = 128M;ADD/g' '/etc/php.ini'
-sudo sed -i 's/default_socket_timeout = 60/default_socket_timeout = 600;ADD/g' '/etc/php.ini'
-sudo sed -i 's/;date.timezone =/date.timezone = Atlantic\/Canary;ADD/g' '/etc/php.ini'
-sudo sed -i 's/;date.default_latitude = 31.7667/date.default_latitude = 28.4716;ADD/g' '/etc/php.ini'
-sudo sed -i 's/;date.default_longitude = 35.2333/date.default_longitude = -16.2472;ADD/g' '/etc/php.ini'
-sudo sed -i 's/mysql.connect_timeout = 60/mysql.connect_timeout = 600;ADD/g' '/etc/php.ini'
-sudo sed -i 's/;browscap = extra\/browscap.ini/browscap = \/etc\/extra\/full_php_browscap.ini;ADD/g' '/etc/php.ini'
-sudo sed -i 's/session.name = PHPSESSID/session.name = ITOP_SESSID;ADD/g' '/etc/php.ini'
-sudo sed -i 's/session.gc_divisor = 1000/session.gc_divisor = 500;ADD/g' '/etc/php.ini'
-sudo sed -i 's/session.gc_maxlifetime = 1440/session.gc_maxlifetime = 86400;ADD/g' '/etc/php.ini'
-sudo sed -i 's/;mbstring.func_overload = 0/mbstring.func_overload = 0;ADD/g' '/etc/php.ini'
+sudo sed -i 's/short_open_tag = Off/short_open_tag = On/g' '/etc/php.ini'
+sudo sed -i 's/output_buffering = 4096/output_buffering = On/g' '/etc/php.ini'
+sudo sed -i 's/expose_php = On/expose_php = Off/g' '/etc/php.ini'
+sudo sed -i 's/max_execution_time = 30/max_execution_time = 3600/g' '/etc/php.ini'
+sudo sed -i 's/max_input_time = 60/max_input_time = 3600/g' '/etc/php.ini'
+sudo sed -i 's/; max_input_vars = 1000/max_input_vars = 10000/g' '/etc/php.ini'
+sudo sed -i 's/memory_limit = 128M/memory_limit = 1024M/g' '/etc/php.ini'
+sudo sed -i 's/error_reporting = E_ALL \& \~E_DEPRECATED \& \~E_STRICT/error_reporting = E_WARNING \& E_ERROR \& \~E_NOTICE \& \~E_DEPRECATED \& \~E_STRICT/g' '/etc/php.ini'
+sudo sed -i 's/log_errors = On/log_errors = Off/g' '/etc/php.ini'
+sudo sed -i 's/log_errors_max_len = 1024/log_errors_max_len = 0/g' '/etc/php.ini'
+sudo sed -i 's/report_memleaks = On/report_memleaks = Off/g' '/etc/php.ini'
+sudo sed -i 's/html_errors = On/html_errors = Off/g' '/etc/php.ini'
+sudo sed -i 's/post_max_size = 8M/post_max_size = 64M/g' '/etc/php.ini'
+sudo sed -i 's/upload_max_filesize = 2M/upload_max_filesize = 128M/g' '/etc/php.ini'
+sudo sed -i 's/default_socket_timeout = 60/default_socket_timeout = 600/g' '/etc/php.ini'
+sudo sed -i 's/;date.timezone =/date.timezone = Atlantic\/Canary/g' '/etc/php.ini'
+sudo sed -i 's/;date.default_latitude = 31.7667/date.default_latitude = 28.4716/g' '/etc/php.ini'
+sudo sed -i 's/;date.default_longitude = 35.2333/date.default_longitude = -16.2472/g' '/etc/php.ini'
+sudo sed -i 's/mysql.connect_timeout = 60/mysql.connect_timeout = 600/g' '/etc/php.ini'
+sudo sed -i 's/;browscap = extra\/browscap.ini/browscap = \/etc\/extra\/full_php_browscap.ini/g' '/etc/php.ini'
+#sudo sed -i 's/session.name = PHPSESSID/session.name = ITOP_SESSID/g' '/etc/php.ini'
+sudo sed -i 's/session.gc_divisor = 1000/session.gc_divisor = 500/g' '/etc/php.ini'
+sudo sed -i 's/session.gc_maxlifetime = 1440/session.gc_maxlifetime = 86400/g' '/etc/php.ini'
+sudo sed -i 's/;mbstring.func_overload = 0/mbstring.func_overload = 0/g' '/etc/php.ini'
 
 #Configuracion de MySQL
 #sudo mv -f my.cnf /etc/
