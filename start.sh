@@ -117,49 +117,6 @@ echo ""
 sudo yum -y install httpd --skip-broken
 #sudo yum -y install httpd24u httpd24u-tools --skip-broken
 
-#Configurando https (pendiente)
-echo "Activar https? [Recomendado: NO][Estado: en pruebas]"
-select yn in "Si" "No"; do
-  case $yn in
-    Si ) 
-      #sudo yum -y install httpd24u-mod_security2 httpd24u-mod_ssl --skip-broken
-      sudo yum install -y mod_ssl
-      #sudo mkdir /root/certificados/
-      #sudo openssl genrsa -out /root/certificados/CA.key 4096
-      #echo "################################################# IMPORTANTE"
-      #echo ""
-      #echo "#################### Es el que se visualiza en el certificado"
-      #echo "#################### Common Name: localhost"
-      #echo ""
-      #echo "#################################################"
-      #sudo openssl req -new -x509 -sha512 -days 1825 -key /root/certificados/CA.key -out /root/certificados/CA.crt
-      #sudo openssl genrsa -out /root/certificados/IA.key 4096
-      #echo "################################################# IMPORTANTE"
-      #echo ""
-      #echo "#################### Common Name tiene que ser diferente al anterior"
-      #echo "#################### Common Name: localhost.localdomain"
-      #echo ""
-      #echo "#################################################"
-      #sudo openssl req -new -sha512 -key /root/certificados/IA.key -out /root/certificados/IA.csr
-      #sudo openssl x509 -req -sha512 -days 1825 -in /root/certificados/IA.csr -CA /root/certificados/CA.crt -CAkey /root/certificados/CA.key -set_serial 01 -out /root/certificados/IA.crt
-      #sudo openssl pkcs12 -export -out /root/certificados/IA.p12 -inkey /root/certificados/IA.key -in /root/certificados/IA.crt -chain -CAfile /root/certificados/CA.crt
-      #sudo chmod -R 0400 /root/certificados/
-      #sudo rm -Rf /etc/pki/tls/certs/CA.crt
-      #sudo rm -Rf /etc/pki/tls/certs/IA.crt
-      #sudo rm -Rf /etc/pki/tls/certs/CA.key
-      #sudo rm -Rf /etc/httpd/conf.d/ssl.conf
-      #sudo cp /root/certificados/CA.crt /etc/pki/tls/certs/
-      #sudo cp /root/certificados/IA.crt /etc/pki/tls/certs/
-      #sudo cp /root/certificados/CA.key /etc/pki/tls/private/
-      #sudo cp ssl.conf /etc/httpd/conf.d/
-      break;;
-    No ) break;;
-  esac
-done
-sudo systemctl start httpd.service
-sudo systemctl enable httpd.service
-sudo chown apache:apache /etc/extra/full_php_browscap.ini
-
 #Desactivar Firewalld e instalar IPtables
 echo "Desactivar Firewalld e instalar IPtables? [Recomendado: NO]"
 select yn in "Si" "No"; do
@@ -239,15 +196,59 @@ sudo rm -Rf /etc/httpd/conf.d/welcome.conf
 sudo touch /etc/httpd/conf.d/welcome.conf
 sudo echo "#" >> /etc/httpd/conf.d/welcome.conf
 
+#Configurando https (pendiente)
+echo "Activar https? [Recomendado: NO][Estado: en pruebas]"
+select yn in "Si" "No"; do
+  case $yn in
+    Si ) 
+      #sudo yum -y install httpd24u-mod_security2 httpd24u-mod_ssl --skip-broken
+      sudo yum install -y mod_ssl
+      #sudo mkdir /root/certificados/
+      #sudo openssl genrsa -out /root/certificados/CA.key 4096
+      #echo "################################################# IMPORTANTE"
+      #echo ""
+      #echo "#################### Es el que se visualiza en el certificado"
+      #echo "#################### Common Name: localhost"
+      #echo ""
+      #echo "#################################################"
+      #sudo openssl req -new -x509 -sha512 -days 1825 -key /root/certificados/CA.key -out /root/certificados/CA.crt
+      #sudo openssl genrsa -out /root/certificados/IA.key 4096
+      #echo "################################################# IMPORTANTE"
+      #echo ""
+      #echo "#################### Common Name tiene que ser diferente al anterior"
+      #echo "#################### Common Name: localhost.localdomain"
+      #echo ""
+      #echo "#################################################"
+      #sudo openssl req -new -sha512 -key /root/certificados/IA.key -out /root/certificados/IA.csr
+      #sudo openssl x509 -req -sha512 -days 1825 -in /root/certificados/IA.csr -CA /root/certificados/CA.crt -CAkey /root/certificados/CA.key -set_serial 01 -out /root/certificados/IA.crt
+      #sudo openssl pkcs12 -export -out /root/certificados/IA.p12 -inkey /root/certificados/IA.key -in /root/certificados/IA.crt -chain -CAfile /root/certificados/CA.crt
+      #sudo chmod -R 0400 /root/certificados/
+      #sudo rm -Rf /etc/pki/tls/certs/CA.crt
+      #sudo rm -Rf /etc/pki/tls/certs/IA.crt
+      #sudo rm -Rf /etc/pki/tls/certs/CA.key
+      #sudo rm -Rf /etc/httpd/conf.d/ssl.conf
+      #sudo cp /root/certificados/CA.crt /etc/pki/tls/certs/
+      #sudo cp /root/certificados/IA.crt /etc/pki/tls/certs/
+      #sudo cp /root/certificados/CA.key /etc/pki/tls/private/
+      #sudo cp ssl.conf /etc/httpd/conf.d/
+      sudo sed -i 's/;session.cookie_secure =/session.cookie_secure = 1;ADD/g' '/etc/php.ini'
+      break;;
+    No ) break;;
+  esac
+done
+sudo systemctl start httpd.service
+sudo systemctl enable httpd.service
+sudo chown apache:apache /etc/extra/full_php_browscap.ini
+
 #Configuracion de PHP
 sudo sed -i 's/short_open_tag = Off/short_open_tag = On;ADD/g' '/etc/php.ini'
 sudo sed -i 's/output_buffering = 4096/output_buffering = On;ADD/g' '/etc/php.ini'
 sudo sed -i 's/expose_php = On/expose_php = Off;ADD/g' '/etc/php.ini'
-sudo sed -i 's/max_execution_time = 30/max_execution_time = 600;ADD/g' '/etc/php.ini'
-sudo sed -i 's/max_input_time = 60/max_input_time = 600;ADD/g' '/etc/php.ini'
+sudo sed -i 's/max_execution_time = 30/max_execution_time = 10000;ADD/g' '/etc/php.ini'
+sudo sed -i 's/max_input_time = 60/max_input_time = 10000;ADD/g' '/etc/php.ini'
 sudo sed -i 's/; max_input_vars = 1000/max_input_vars = 10000;ADD/g' '/etc/php.ini'
-sudo sed -i 's/memory_limit = 128M/memory_limit = 512M;ADD/g' '/etc/php.ini'
-sudo sed -i 's/error_reporting = E_ALL \& \~E_DEPRECATED \& \~E_STRICT/error_reporting = E_WARNING \& E_ERROR \& ~E_NOTICE \& \~E_DEPRECATED \& \~E_STRICT;ADD/g' '/etc/php.ini'
+sudo sed -i 's/memory_limit = 128M/memory_limit = 1024M;ADD/g' '/etc/php.ini'
+sudo sed -i 's/error_reporting = E_ALL \& \~E_DEPRECATED \& \~E_STRICT/error_reporting = E_WARNING \& E_ERROR \& \~E_NOTICE \& \~E_DEPRECATED \& \~E_STRICT;ADD/g' '/etc/php.ini'
 sudo sed -i 's/log_errors = On/log_errors = Off;ADD/g' '/etc/php.ini'
 sudo sed -i 's/log_errors_max_len = 1024/log_errors_max_len = 0;ADD/g' '/etc/php.ini'
 sudo sed -i 's/report_memleaks = On/report_memleaks = Off;ADD/g' '/etc/php.ini'
@@ -261,8 +262,9 @@ sudo sed -i 's/;date.default_longitude = 35.2333/date.default_longitude = -16.24
 sudo sed -i 's/mysql.connect_timeout = 60/mysql.connect_timeout = 600;ADD/g' '/etc/php.ini'
 sudo sed -i 's/;browscap = extra\/browscap.ini/browscap = \/etc\/extra\/full_php_browscap.ini;ADD/g' '/etc/php.ini'
 sudo sed -i 's/session.name = PHPSESSID/session.name = ITOP_SESSID;ADD/g' '/etc/php.ini'
+sudo sed -i 's/session.gc_divisor = 1000/session.gc_divisor = 500;ADD/g' '/etc/php.ini'
 sudo sed -i 's/session.gc_maxlifetime = 1440/session.gc_maxlifetime = 86400;ADD/g' '/etc/php.ini'
-sudo sed -i 's/;mbstring.func_overload = 0/mbstring.func_overload = 7;ADD/g' '/etc/php.ini'
+sudo sed -i 's/;mbstring.func_overload = 0/mbstring.func_overload = 0;ADD/g' '/etc/php.ini'
 
 #Configuracion de MySQL
 #sudo mv -f my.cnf /etc/
