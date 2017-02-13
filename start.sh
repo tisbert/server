@@ -55,13 +55,13 @@ select yn in "Si" "No"; do
       echo ""
       echo "Instalando extras"
       echo ""
-      sudo yum -y install dkms nano bzip2 libzip python2-paramiko proj tinyxml bzip2-devel openssl openssl-devel wget lynx bc grep unzip bc coreutils file dos2unix ioping curl libcurl libcurl-devel autoconf automake cmake freetype-devel gcc gcc-c++ libtool make mercurial nasm pkgconfig zlib-devel yasm yasm-devel numactl-devel pwgen patch readline zlib zlib-devel bash libmcrypt libmcrypt-devel kernel-headers kernel-devel libpcap open-vm-tools iftop --skip-broken
+      sudo yum -y install libsodium dkms nano bzip2 libzip python2-paramiko proj tinyxml bzip2-devel openssl openssl-devel wget lynx bc grep unzip bc coreutils file dos2unix ioping curl libcurl libcurl-devel autoconf automake cmake freetype-devel gcc gcc-c++ libtool make mercurial nasm pkgconfig zlib-devel yasm yasm-devel numactl-devel pwgen patch readline zlib zlib-devel bash libmcrypt libmcrypt-devel kernel-headers kernel-devel libpcap open-vm-tools iftop --skip-broken
       break;;
     No )
       echo ""
       echo "Instalando lo necesario"
       echo ""
-      sudo yum -y install nano openssl curl libcurl pwgen libmcrypt iftop coreutils tinyxml proj python2-paramiko libzip --skip-broken
+      sudo yum -y install libsodium nano openssl curl libcurl pwgen libmcrypt iftop coreutils tinyxml proj python2-paramiko libzip --skip-broken
       break;;
   esac
 done
