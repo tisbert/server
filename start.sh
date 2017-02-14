@@ -1,30 +1,34 @@
-echo "Nombre del usuario actual: "
-read USER
+usuarioActual=$(whoami)
 
-echo "Deshabilitando SElinux"
-sudo setsebool -P httpd_can_network_connect 1
-sudo setsebool -P httpd_can_network_connect_db 1
-sudo setsebool -P httpd_unified 1
-sudo setsebool -P polyinstantiation_enabled 1
-sudo sed -i 's/SELINUX=enforcing/SELINUX=disabled/g' '/etc/selinux/config'
-sudo sed -i 's/SELINUX=permissive/SELINUX=disabled/g' '/etc/selinux/config'
-sudo setenforce 0
-sudo cat '/etc/selinux/config' | grep '^SELINUX='
+echo "Checking SElinux"
+comprobacionSelinux = 
+if [[ -z "$(sestatus | grep disabled)" ]]; then
+	sudo setsebool -P httpd_can_network_connect 1
+  sudo setsebool -P httpd_can_network_connect_db 1
+  sudo setsebool -P httpd_unified 1
+  sudo setsebool -P polyinstantiation_enabled 1
+  sudo sed -i 's/SELINUX=enforcing/SELINUX=disabled/g' '/etc/selinux/config'
+  sudo sed -i 's/SELINUX=permissive/SELINUX=disabled/g' '/etc/selinux/config'
+  sudo setenforce 0
+  sudo cat '/etc/selinux/config' | grep '^SELINUX='
 
-echo "¿Reiniciar ahora?"
-echo "recomendado SOLO después de deshabilitar SElinux [Recomendado: SI]"
-select yn in "Si" "No"; do
-  case $yn in
-    Si ) 
-      sudo reboot now
-      break;;
-    No ) break;;
-  esac
-done
+  echo "Restart Now? [recommended: Yes]"
+  select yn in "Yes" "No"; do
+    case $yn in
+      Yes ) 
+        sudo reboot now
+        break;;
+      No ) break;;
+    esac
+  done
+else
+	echo "SElinux Status"
+  sudo cat '/etc/selinux/config' | grep '^SELINUX='
+fi
 
 #Install IUS y EPEL
 echo ""
-echo "Instalando IUS, EPEL"
+echo "Installing IUS, EPEL"
 echo ""
 sudo yum -y install epel-release --skip-broken
 sudo wget https://centos7.iuscommunity.org/ius-release.rpm
@@ -39,10 +43,10 @@ sudo yum -y upgrade --skip-broken
 sudo yum -y remove mariadb*
 
 #sudo yum -y install axel --skip-broken
-echo "Instalar extras? [Recomendado: NO]"
-select yn in "Si" "No"; do
+echo "To install extras? [Recomendado: NO]"
+select yn in "Yes" "No"; do
   case $yn in
-    Si ) 
+    Yes ) 
       echo ""
       echo "Instalando extras"
       echo ""
@@ -63,10 +67,10 @@ sudo mkdir /etc/extra
 sudo mv -f full_php_browscap.ini /etc/extra
 #sudo chown -hR apache:apache /etc/extra/full_php_browscap.ini
 
-echo "Instalar Webmin? [Recomendado: SI]"
-select yn in "Si" "No"; do
+echo "To install Webmin? [Recomendado: SI]"
+select yn in "Yes" "No"; do
   case $yn in
-    Si ) 
+    Yes ) 
       #Install webmin
       echo ""
       echo "Instalando webmin"
@@ -82,20 +86,19 @@ select yn in "Si" "No"; do
       sudo rpm --import jcameron-key.asc
       sudo yum -y install webmin --skip-broken
       sudo service webmin restart
-      break;;
-    No ) break;;
-  esac
-done
-
-echo "crear un usuario nuevo para Webmin? [Recomendado: SI]"
-select yn in "Si" "No"; do
-  case $yn in
-    Si ) 
-      sudo adduser webmin
-      sudo passwd webmin
-      sudo echo "webmin:x:0:::::::0:0" >> /etc/webmin/miniserv.users
-      sudo echo "webmin: backup-config change-user webmincron usermin webminlog webmin servers acl bacula-backup init passwd quota mount fsdump inittab ldap-client ldap-useradmin logrotate mailcap mon pam proc at cron package-updates software man syslog syslog-ng system-status useradmin apache bind8 dhcpd dovecot exim fetchmail jabber ldap-server mysql openslp postfix postgresql proftpd procmail qmailadmin mailboxes sshd samba sendmail spam squid sarg wuftpd webalizer adsl-client bandwidth fail2ban firewalld ipsec krb5 firewall firewall6 exports nis net xinetd inetd pap ppp-client pptp-client pptp-server stunnel shorewall shorewall6 tcpwrappers idmapd filter burner grub raid lvm fdisk lpadmin smart-status time vgetty iscsi-client iscsi-server iscsi-tgtd iscsi-target cluster-passwd cluster-copy cluster-cron cluster-shell cluster-software cluster-usermin cluster-useradmin cluster-webmin heartbeat shell custom filemin tunnel file phpini cpan htaccess-htpasswd telnet status ajaxterm updown dfsadmin ipfilter ipfw smf" >> /etc/webmin/webmin.acl
-      sudo service webmin restart
+      echo "crear un usuario nuevo para Webmin? [Recomendado: SI]"
+      select yn in "Yes" "No"; do
+        case $yn in
+          Yes ) 
+            sudo adduser webmin
+            sudo passwd webmin
+            sudo echo "webmin:x:0:::::::0:0" >> /etc/webmin/miniserv.users
+            sudo echo "webmin: backup-config change-user webmincron usermin webminlog webmin servers acl bacula-backup init passwd quota mount fsdump inittab ldap-client ldap-useradmin logrotate mailcap mon pam proc at cron package-updates software man syslog syslog-ng system-status useradmin apache bind8 dhcpd dovecot exim fetchmail jabber ldap-server mysql openslp postfix postgresql proftpd procmail qmailadmin mailboxes sshd samba sendmail spam squid sarg wuftpd webalizer adsl-client bandwidth fail2ban firewalld ipsec krb5 firewall firewall6 exports nis net xinetd inetd pap ppp-client pptp-client pptp-server stunnel shorewall shorewall6 tcpwrappers idmapd filter burner grub raid lvm fdisk lpadmin smart-status time vgetty iscsi-client iscsi-server iscsi-tgtd iscsi-target cluster-passwd cluster-copy cluster-cron cluster-shell cluster-software cluster-usermin cluster-useradmin cluster-webmin heartbeat shell custom filemin tunnel file phpini cpan htaccess-htpasswd telnet status ajaxterm updown dfsadmin ipfilter ipfw smf" >> /etc/webmin/webmin.acl
+            sudo service webmin restart
+            break;;
+          No ) break;;
+        esac
+      done
       break;;
     No ) break;;
   esac
@@ -103,16 +106,16 @@ done
 
 #Install APACHE
 echo ""
-echo "Instalando APACHE"
+echo "Installing APACHE"
 echo ""
 sudo yum -y install httpd --skip-broken
 #sudo yum -y install httpd24u httpd24u-tools --skip-broken
 
 #Desactivar Firewalld e instalar IPtables
 echo "Desactivar Firewalld e instalar IPtables? [Recomendado: NO]"
-select yn in "Si" "No"; do
+select yn in "Yes" "No"; do
   case $yn in
-    Si ) 
+    Yes ) 
       sudo systemctl mask firewalld
       sudo systemctl stop firewalld
       sudo yum -y install iptables-services
@@ -139,7 +142,7 @@ done
 
 #Install MySQL
 echo ""
-echo "Instalando MySQL"
+echo "Installing MySQL"
 echo ""
 #sudo yum -y install mariadb101u mariadb101u-server mariadb101u-libs mariadb101u-common --skip-broken
 yum -y install mariadb mariadb-server --skip-broken
@@ -159,7 +162,7 @@ sudo mysql_secure_installation
 
 #Install PHP 5.6
 echo ""
-echo "Instalando PHP"
+echo "Installing PHP"
 echo ""
 #sudo yum -y remove php*
 sudo yum -y install php56u php56u-pdo php56u-dba php56u-gd php56u-imap php56u-ldap php56u-xml php56u-intl php56u-soap php56u-mbstring php56u-pear php56u-mysql php56u-mysqlnd php56u-opcache php56u-fpm-httpd php56u-suhosin php56u-ioncube-loader php56u-mcrypt php56u-pecl-apcu php56u-bcmath php56u-tidy --skip-broken
@@ -168,7 +171,7 @@ sudo systemctl enable httpd.service
 
 #Install PEAR library
 echo ""
-echo "Instalando librerias de PEAR"
+echo "Installing librerias de PEAR"
 echo ""
 sudo pear upgrade-all
 sudo pear install --alldeps Auth_SASL
@@ -188,10 +191,10 @@ sudo touch /etc/httpd/conf.d/welcome.conf
 sudo echo "#" >> /etc/httpd/conf.d/welcome.conf
 
 #Configurando https (pendiente)
-echo "Activar https? [Recomendado: NO][Estado: en pruebas]"
-select yn in "Si" "No"; do
+echo "To install https? [Recomendado: NO][Estado: en pruebas]"
+select yn in "Yes" "No"; do
   case $yn in
-    Si ) 
+    Yes ) 
       #sudo yum -y install httpd24u-mod_security2 httpd24u-mod_ssl --skip-broken
       sudo yum install -y mod_ssl
       #sudo mkdir /root/certificados/
@@ -262,10 +265,10 @@ sudo sed -i 's/;mbstring.func_overload = 0/mbstring.func_overload = 0/g' '/etc/p
 #sudo mv -f my.cnf /etc/
 
 #Instalar workbench community
-echo "Instalar Workbench community 6.3.8-1.el7.x86_64? "
-select yn in "Si" "No"; do
+echo "To install Workbench community 6.3.8-1.el7.x86_64? "
+select yn in "Yes" "No"; do
   case $yn in
-    Si ) 
+    Yes ) 
       sudo yum -y install libodbc* libpq*
       #gtkmm30: necesario para la versión 6.3.9
       #sudo yum -y install gtkmm30
@@ -278,10 +281,10 @@ select yn in "Si" "No"; do
 done
 
 #Instalar Atom io
-echo "Instalar editor de texto Atom? "
-select yn in "Si" "No"; do
+echo "To install text editor: Atom? "
+select yn in "Yes" "No"; do
   case $yn in
-    Si ) 
+    Yes ) 
       sudo yum -y install libX*
       sudo wget https://github.com/atom/atom/releases/download/v1.14.1/atom.x86_64.rpm
       sudo yum -y install lsb-core-noarch
@@ -291,6 +294,26 @@ select yn in "Si" "No"; do
     No ) break;;
   esac
 done
+
+#Instalar Google Chrome
+echo "To install Google Chrome? "
+select yn in "Yes" "No"; do
+  case $yn in
+    Yes ) 
+      sudo rm -Rf /etc/yum.repos.d/google-chrome.repo
+      sudo touch /etc/yum.repos.d/google-chrome.repo
+      sudo echo "[google-chrome]" >> /etc/yum.repos.d/webmin.repo
+      sudo echo "name=google-chrome" >> /etc/yum.repos.d/webmin.repo
+      sudo echo "baseurl=http://dl.google.com/linux/chrome/rpm/stable/$basearch" >> /etc/yum.repos.d/webmin.repo
+      sudo echo "enabled=1" >> /etc/yum.repos.d/webmin.repo
+      sudo echo "gpgcheck=1" >> /etc/yum.repos.d/webmin.repo
+      sudo echo "gpgkey=https://dl-ssl.google.com/linux/linux_signing_key.pub" >> /etc/yum.repos.d/webmin.repo
+      sudo yum -y install google-chrome-stable --skip-broken
+      break;;
+    No ) break;;
+  esac
+done
+
 
 #Finalizando instalación
 sudo systemctl restart httpd.service
@@ -302,9 +325,13 @@ sudo mkdir /usr/share/composer
 sudo mv -f compos.sh /usr/share/composer
 sudo chmod 0700 /usr/share/composer/compos.sh
 
-echo "Eliminando archivos innecesarios en: "$USER
-if [ "$USER" == "root" ] || [ "$USER" == "" ]; then
+echo "Eliminando archivos innecesarios en: "$usuarioActual
+
+if [ $usuarioActual == "root" ];then
   sudo rm -Rf /root/server/
 else
-  sudo rm -Rf /home/$USER/server/
+  sudo rm -Rf /home/$usuarioActual/server/
 fi
+echo "/////////////////////////////////"
+echo "The script completed successfully"
+echo "/////////////////////////////////"
