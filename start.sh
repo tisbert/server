@@ -266,8 +266,10 @@ echo "Instalar Workbench community 6.3.8-1.el7.x86_64? "
 select yn in "Si" "No"; do
   case $yn in
     Si ) 
-      sudo yum -y install libodbc* libpq* gtkmm30
-      sudo wget https://dev.mysql.com/get/Downloads/MySQLGUITools/mysql-workbench-community-6.3.9-1.el7.x86_64.rpm
+      sudo yum -y install libodbc* libpq*
+      #gtkmm30: necesario para la versión 6.3.9
+      #sudo yum -y install gtkmm30
+      sudo wget https://dev.mysql.com/get/Downloads/MySQLGUITools/mysql-workbench-community-6.3.8-1.el7.x86_64.rpm
       sudo rpm -Uvh mysql-workbench-community*.rpm
       sudo rm -Rf mysql-workbench-community*.rpm
       break;;
