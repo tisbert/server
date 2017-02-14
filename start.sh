@@ -38,16 +38,7 @@ sudo yum -y upgrade --skip-broken
 #Desinstalando mariadb
 sudo yum -y remove mariadb*
 
-#Install extras
-#echo "Instalar acelerador de descargas 'AXEL'? [Recomendado: SI]"
-#select yn in "Si" "No"; do
-#  case $yn in
-#    Si ) 
-#      sudo yum -y install axel --skip-broken
-#      break;;
-#    No ) break;;
-#  esac
-#done
+#sudo yum -y install axel --skip-broken
 echo "Instalar extras? [Recomendado: NO]"
 select yn in "Si" "No"; do
   case $yn in
@@ -244,16 +235,17 @@ sudo chown apache:apache /etc/extra/full_php_browscap.ini
 sudo sed -i 's/short_open_tag = Off/short_open_tag = On/g' '/etc/php.ini'
 sudo sed -i 's/output_buffering = 4096/output_buffering = On/g' '/etc/php.ini'
 sudo sed -i 's/expose_php = On/expose_php = Off/g' '/etc/php.ini'
-sudo sed -i 's/max_execution_time = 30/max_execution_time = 3600/g' '/etc/php.ini'
-sudo sed -i 's/max_input_time = 60/max_input_time = 3600/g' '/etc/php.ini'
+sudo sed -i 's/max_execution_time = 30/max_execution_time = 5000/g' '/etc/php.ini'
+sudo sed -i 's/max_input_time = 60/max_input_time = 5000/g' '/etc/php.ini'
 sudo sed -i 's/; max_input_vars = 1000/max_input_vars = 10000/g' '/etc/php.ini'
 sudo sed -i 's/memory_limit = 128M/memory_limit = 1024M/g' '/etc/php.ini'
-sudo sed -i 's/error_reporting = E_ALL \& \~E_DEPRECATED \& \~E_STRICT/error_reporting = E_WARNING \& E_ERROR \& \~E_NOTICE \& \~E_DEPRECATED \& \~E_STRICT/g' '/etc/php.ini'
+sudo sed -i 's/error_reporting = E_ALL \& \~E_DEPRECATED \& \~E_STRICT/error_reporting = E_COMPILE_ERROR\|E_RECOVERABLE_ERROR\|E_ERROR\|E_CORE_ERROR/g' '/etc/php.ini'
 sudo sed -i 's/log_errors = On/log_errors = Off/g' '/etc/php.ini'
 sudo sed -i 's/log_errors_max_len = 1024/log_errors_max_len = 0/g' '/etc/php.ini'
 sudo sed -i 's/report_memleaks = On/report_memleaks = Off/g' '/etc/php.ini'
 sudo sed -i 's/html_errors = On/html_errors = Off/g' '/etc/php.ini'
 sudo sed -i 's/post_max_size = 8M/post_max_size = 64M/g' '/etc/php.ini'
+sudo sed -i 's/;always_populate_raw_post_data = -1/always_populate_raw_post_data = -1/g' '/etc/php.ini'
 sudo sed -i 's/upload_max_filesize = 2M/upload_max_filesize = 128M/g' '/etc/php.ini'
 sudo sed -i 's/default_socket_timeout = 60/default_socket_timeout = 600/g' '/etc/php.ini'
 sudo sed -i 's/;date.timezone =/date.timezone = Atlantic\/Canary/g' '/etc/php.ini'
