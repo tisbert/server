@@ -334,11 +334,21 @@ if [ $usuarioActual == "root" ];then
 else
   sudo rm -Rf /home/$usuarioActual/server/
 fi
+
+#Instalar Google Chrome
+#echo "What version do you want to install? "
+#select yn in "Stable" "Developer"; do
+#  case $yn in
+#    Stable ) 
+	#sudo git clone -b developer https://github.com/YetiForceCompany/YetiForceCRM.git /var/www/html/
+	#sudo chown -hR apache:apache /var/www/html/
+#      break;;
+#    Developer ) 
+    	#
+#      break;;
+#  esac
+#done
+
 echo "/////////////////////////////////"
 echo "The script completed successfully"
 echo "/////////////////////////////////"
-
-#cd /usr/share/composer
-#sudo ./compos.sh
-#sudo git clone -b developer https://github.com/YetiForceCompany/YetiForceCRM.git /var/www/html/
-#sudo chown -hR apache:apache /var/www/html/
