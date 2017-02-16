@@ -1,5 +1,8 @@
 usuarioActual=$(whoami)
 
+#Desinstalando mariadb
+sudo yum -y remove mariadb*
+
 echo "Checking SElinux"
 comprobacionSelinux = 
 if [[ -z "$(sestatus | grep disabled)" ]]; then
@@ -38,9 +41,6 @@ sudo yum clean all
 sudo yum -y upgrade --skip-broken
 #sudo yum -y install yum-plugin-replace
 #sudo yum -y replace --replace-with php56u php
-
-#Desinstalando mariadb
-sudo yum -y remove mariadb*
 
 #sudo yum -y install axel --skip-broken
 echo "To install extras? [Recomendado: NO]"
@@ -86,7 +86,9 @@ select yn in "Yes" "No"; do
       sudo rpm --import jcameron-key.asc
       sudo yum -y install webmin --skip-broken
       sudo service webmin restart
-      echo "crear un usuario nuevo para Webmin? [Recomendado: SI]"
+      echo "Create a new user for Webmin? [Recomendado: SI]"
+      echo "NOTE: Root user will not have permissions on webmin"
+      echo "User: webmin / Pass:webmin"
       select yn in "Yes" "No"; do
         case $yn in
           Yes ) 
