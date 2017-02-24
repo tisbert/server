@@ -11,6 +11,7 @@ echo "######   Checking SElinux"
 echo "#########################################################################"
 echo ""
 if [[ -z "$(sestatus | grep disabled)" ]]; then
+  echo "procesing..."
   sudo setsebool -P httpd_can_network_connect 1
   sudo setsebool -P httpd_can_network_connect_db 1
   sudo setsebool -P httpd_unified 1
@@ -70,7 +71,7 @@ echo ""
 echo "#########################################################################"
 echo "######   Installing APACHE"
 echo "#########################################################################"
-echo ""
+echo "procesing..."
 #sudo yum -y install httpd --skip-broken
 sudo yum -y -q --skip-broken install httpd24u httpd24u-tools
 
@@ -87,6 +88,7 @@ echo "#########################################################################"
 select yn in "Yes" "No"; do
   case $yn in
     Yes )
+    echo "procesing..."
     sudo yum -y -q --skip-broken install httpd24u-mod_security2 httpd24u-mod_ssl
     #sudo yum -y -q --skip-broken install mod_ssl
     #sudo mkdir /root/certificados/
@@ -126,6 +128,7 @@ done
 echo "#########################################################################"
 echo "######   Installing MySQL"
 echo "#########################################################################"
+echo "procesing..."
 sudo yum -y -q --skip-broken install mariadb101u mariadb101u-server mariadb101u-libs mariadb101u-common
 #sudo yum -y --skip-broken install mariadb mariadb-server
 
@@ -150,6 +153,7 @@ sudo mysql_secure_installation
 echo "#########################################################################"
 echo "######   Installing PHP"
 echo "#########################################################################"
+echo "procesing..."
 sudo yum -y -q --skip-broken install php56u php56u-pdo php56u-dba php56u-gd php56u-imap php56u-ldap php56u-xml php56u-intl php56u-soap php56u-mbstring php56u-pear php56u-mysql php56u-mysqlnd php56u-opcache php56u-fpm-httpd php56u-suhosin php56u-ioncube-loader php56u-mcrypt php56u-pecl-apcu php56u-bcmath php56u-tidy
 
 sudo sed -i 's/short_open_tag = Off/short_open_tag = On/g' '/etc/php.ini'
@@ -195,10 +199,10 @@ echo ""
 echo "#########################################################################"
 echo "######   To install Webmin? [recommended: SI]"
 echo "#########################################################################"
-echo ""
 select yn in "Yes" "No"; do
   case $yn in
     Yes )
+    echo "procesing..."
     sudo rm -Rf /etc/yum.repos.d/webmin.repo
     sudo touch /etc/yum.repos.d/webmin.repo
     sudo echo "[Webmin]" >> /etc/yum.repos.d/webmin.repo
@@ -220,6 +224,7 @@ select yn in "Yes" "No"; do
     select yn in "Yes" "No"; do
       case $yn in
         Yes )
+        echo "procesing..."
         sudo adduser superwebmin
         sudo passwd superwebmin
         # OLD sudo echo "webmin:x:0:::::::0:0" >> /etc/webmin/miniserv.users
@@ -240,6 +245,7 @@ echo "#########################################################################"
 select yn in "Yes" "No"; do
   case $yn in
     Yes )
+    echo "procesing..."
     sudo yum -y -q --skip-broken install gtkmm30 libzip proj python2-crypto python2-paramiko mysql-connector-odbc
     sudo wget -q https://dev.mysql.com/get/Downloads/MySQLGUITools/mysql-workbench-community-6.3.9-1.el7.x86_64.rpm
     sudo rpm -Uvh mysql-workbench-community*.rpm
@@ -255,6 +261,7 @@ echo "#########################################################################"
 select yn in "Yes" "No"; do
   case $yn in
     Yes )
+    echo "procesing..."
     sudo yum -y -q --skip-broken install lsb-core-noarch
     sudo wget -q https://github.com/atom/atom/releases/download/v1.14.3/atom.x86_64.rpm
     sudo rpm -Uvh atom.x86_64.rpm
@@ -270,6 +277,7 @@ echo "#########################################################################"
 select yn in "Yes" "No"; do
   case $yn in
     Yes )
+    echo "procesing..."
     sudo rm -Rf /etc/yum.repos.d/google-chrome.repo
     sudo touch /etc/yum.repos.d/google-chrome.repo
     sudo echo "[google-chrome]" >> /etc/yum.repos.d/webmin.repo
@@ -295,6 +303,7 @@ echo ""
 select yn in "Yes" "No"; do
   case $yn in
     Yes )
+    echo "procesing..."
     sudo systemctl mask firewalld
     sudo systemctl stop firewalld
     sudo yum -y -q remove firewalld
@@ -308,6 +317,7 @@ select yn in "Yes" "No"; do
     echo "#########################################################################"
     echo "######   Abriendo puertos"
     echo "#########################################################################"
+    echo "procesing..."
     sudo firewall-cmd --permanent --add-port=80/tcp
     sudo firewall-cmd --permanent --add-service http
     sudo firewall-cmd --permanent --add-port=443/tcp
@@ -336,7 +346,7 @@ echo ""
 echo "#########################################################################"
 echo "######   Deleting unnecessary files in: "$usuarioActual
 echo "#########################################################################"
-echo ""
+echo "procesing..."
 if [ $usuarioActual == "root" ];then
   sudo rm -Rf /root/server/
 else
