@@ -330,7 +330,7 @@ sudo mv -f compos.sh /usr/share/composer
 sudo chmod 0700 /usr/share/composer/compos.sh
 echo ""
 echo "#########################################################################"
-echo "######   Eliminando archivos innecesarios en: "$usuarioActual
+echo "######   Deleting unnecessary files in: "$usuarioActual
 echo "#########################################################################"
 echo ""
 if [ $usuarioActual == "root" ];then
@@ -355,7 +355,7 @@ fi
 
 echo ""
 echo "#########################################################################"
-echo "######   Acceder a webmin por 'https://localhost:10000'"
+echo "######   Access webmin by 'https://localhost:10000'"
 echo "#########################################################################"
 
 echo ""
