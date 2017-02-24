@@ -246,7 +246,7 @@ select yn in "Yes" "No"; do
   case $yn in
     Yes )
     echo "procesing..."
-    sudo yum -y -q --skip-broken install gtkmm30 libzip proj python2-crypto python2-paramiko mysql-connector-odbc
+    sudo yum -y -q --skip-broken install gtkmm30 libzip proj python2-crypto python2-paramiko mysql-connector-odbc libpqxx
     sudo wget -q https://dev.mysql.com/get/Downloads/MySQLGUITools/mysql-workbench-community-6.3.9-1.el7.x86_64.rpm
     sudo rpm -Uvh mysql-workbench-community*.rpm
     sudo rm -Rf mysql-workbench-community*.rpm
