@@ -330,23 +330,38 @@ select yn in "Yes" "No"; do
   esac
 done
 
-#Finalizando instalación
-sudo chown apache:apache /etc/extra/full_php_browscap.ini
+echo "#########################################################################"
+echo "######   To install Composer? "
+echo "#########################################################################"
+select yn in "Yes" "No"; do
+  case $yn in
+    Yes )
+    echo "procesing..."
+    sudo mkdir /usr/share/composer
+    sudo mv -f compos.sh /usr/share/composer
+    sudo chmod 0700 /usr/share/composer/compos.sh
+    sudo sh /usr/share/composer/compos.sh
+    break;;
+    No ) break;;
+  esac
+done
 
-sudo systemctl restart httpd.service
-
-sudo systemctl restart mariadb.service
-
-sudo service webmin restart
-
-sudo mkdir /usr/share/composer
-sudo mv -f compos.sh /usr/share/composer
-sudo chmod 0700 /usr/share/composer/compos.sh
 echo ""
 echo "#########################################################################"
-echo "######   Deleting unnecessary files in: "$usuarioActual
+echo "######   Completing installation...
 echo "#########################################################################"
 echo "procesing..."
+
+sudo chown apache:apache /etc/extra/full_php_browscap.ini
+
+sudo systemctl stop httpd.service
+sudo systemctl stop mariadb.service
+sudo service webmin stop
+sudo systemctl start httpd.service
+sudo systemctl start mariadb.service
+sudo service webmin start
+
+echo "Deleting unnecessary files in: "$usuarioActual
 if [ $usuarioActual == "root" ];then
   sudo rm -Rf /root/server/
 else
