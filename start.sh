@@ -354,19 +354,13 @@ echo "procesing..."
 
 sudo chown apache:apache /etc/extra/full_php_browscap.ini
 
+echo "Stopping and starting services to apply changes..."
 sudo systemctl stop httpd.service
 sudo systemctl stop mariadb.service
 sudo service webmin stop
 sudo systemctl start httpd.service
 sudo systemctl start mariadb.service
 sudo service webmin start
-
-echo "Deleting unnecessary files in: "$usuarioActual
-if [ $usuarioActual == "root" ];then
-  sudo rm -Rf /root/server/
-else
-  sudo rm -Rf /home/$usuarioActual/server/
-fi
 
 #echo "What version do you want to install? "
 #select yn in "Stable" "Developer"; do
@@ -382,13 +376,19 @@ fi
 #  esac
 #done
 
+echo "Deleting unnecessary files in: "$usuarioActual
+
 echo ""
 echo "#########################################################################"
 echo "######   Access webmin by 'https://localhost:10000'"
 echo "#########################################################################"
-
 echo ""
 echo "/////////////////////////////////////////////////////////////////////////"
 echo "/////////////////// The script completed successfully ///////////////////"
 echo "/////////////////////////////////////////////////////////////////////////"
 echo ""
+if [ $usuarioActual == "root" ];then
+  sudo rm -Rf /root/server/
+else
+  sudo rm -Rf /home/$usuarioActual/server/
+fi
