@@ -65,6 +65,7 @@ sudo systemctl start httpd.service
 sudo rm -Rf /etc/httpd/conf.d/welcome.conf
 sudo touch /etc/httpd/conf.d/welcome.conf
 sudo echo "#" >> /etc/httpd/conf.d/welcome.conf
+echo ""
 echo "#########################################################################"
 echo "######   To install HTTPS?"
 echo "#########################################################################"
@@ -82,6 +83,7 @@ select yn in "Yes" "No"; do
     No ) break;;
   esac
 done
+echo ""
 echo "#########################################################################"
 echo "######   Installing MySQL"
 echo "#########################################################################"
@@ -94,6 +96,7 @@ sed -i"my.cnf.bak" '13a max_allowed_packet=16M' /etc/my.cnf
 sed -i"my.cnf.bak" '14a innodb_lock_wait_timeout=600' /etc/my.cnf
 sed -i"my.cnf.bak" '15a  ' /etc/my.cnf
 dbpass=$(pwgen -1cnys 24)
+echo ""
 echo "#########################################################################"
 echo "######   "
 echo "###   Password generada de 24bits opcional para password de mysql ->  "$dbpass
@@ -107,6 +110,7 @@ else
   sudo echo $dbpass >> /home/$usuarioActual/dbpass.conf
 fi
 sudo mysql_secure_installation
+echo ""
 echo "#########################################################################"
 echo "######   Installing PHP"
 echo "#########################################################################"
