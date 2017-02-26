@@ -119,6 +119,12 @@ select yn in "Yes" "No"; do
     #sudo cp /root/certificados/IA.crt /etc/pki/tls/certs/
     #sudo cp /root/certificados/CA.key /etc/pki/tls/private/
     #sudo cp ssl.conf /etc/httpd/conf.d/
+    
+    #https://mozilla.github.io/server-side-tls/ssl-config-generator/
+    sudo sed -i 's/SSLProtocol all -SSLv2/SSLProtocol all -SSLv2 -TLSv1 -TLSv1.1/g' '/etc/httpd/conf.d/ssl.conf'
+    sudo sed -i 's/SSLCipherSuite HIGH:MEDIUM:!aNULL:!MD5/SSLCipherSuite ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305:ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-SHA384:ECDHE-RSA-AES256-SHA384:ECDHE-ECDSA-AES128-SHA256:ECDHE-RSA-AES128-SHA256/g' '/etc/httpd/conf.d/ssl.conf'
+    sudo sed -i 's/#SSLHonorCipherOrder on/SSLHonorCipherOrder on/g' '/etc/httpd/conf.d/ssl.conf'
+    
     sudo sed -i 's/;session.cookie_secure =/session.cookie_secure = 1/g' '/etc/php.ini'
     break;;
     No ) break;;
