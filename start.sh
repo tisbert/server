@@ -190,24 +190,25 @@ sudo systemctl stop httpd.service
 sudo systemctl stop mariadb.service
 sudo systemctl start httpd.service
 sudo systemctl start mariadb.service
-echo "What version do you want to install from YetiForceCRM? "
+echo ""
+echo "#########################################################################"
+echo "######   What version do you want to install from YetiForceCRM?"
+echo "#########################################################################"
 select yn in "Stable" "Developer"; do
   case $yn in
     Stable )
+    echo "procesing..."
     sudo git clone -b stable https://github.com/YetiForceCompany/YetiForceCRM.git /var/www/html/
     sudo chown -hR apache:apache /var/www/html/
     break;;
     Developer )
+    echo "procesing..."
     sudo git clone -b developer https://github.com/YetiForceCompany/YetiForceCRM.git /var/www/html/
     sudo chown -hR apache:apache /var/www/html/
     break;;
   esac
 done
 echo "Deleting unnecessary files in: "$usuarioActual
-echo ""
-echo "#########################################################################"
-echo "######   Access webmin by 'https://localhost:10000'"
-echo "#########################################################################"
 echo ""
 echo "/////////////////////////////////////////////////////////////////////////"
 echo "/////////////////// The script completed successfully ///////////////////"
