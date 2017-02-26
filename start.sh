@@ -8,7 +8,6 @@ echo ""
 echo "#########################################################################"
 echo "######   Checking SElinux"
 echo "#########################################################################"
-echo ""
 if [[ -z "$(sestatus | grep disabled)" ]]; then
   echo "procesing..."
   sudo setsebool -P httpd_can_network_connect 1
@@ -21,8 +20,8 @@ if [[ -z "$(sestatus | grep disabled)" ]]; then
   echo ""
   echo "#########################################################################"
   echo "######   Restart Now? [recommended: Yes]"
+  echo "######   NOTE: Once restarted, start the script again"
   echo "#########################################################################"
-  echo ""
   select yn in "Yes" "No"; do
     case $yn in
       Yes )
@@ -83,7 +82,6 @@ select yn in "Yes" "No"; do
     No ) break;;
   esac
 done
-
 echo "#########################################################################"
 echo "######   Installing MySQL"
 echo "#########################################################################"
@@ -101,8 +99,13 @@ echo "######   "
 echo "###   Password generada de 24bits opcional para password de mysql ->  "$dbpass
 echo "######   "
 echo "#########################################################################"
-sudo touch /root/dbpass.conf
-sudo echo $dbpass >> /root/dbpass.conf
+if [ $usuarioActual == "root" ];then
+  sudo touch /root/dbpass.conf
+  sudo echo $dbpass >> /root/dbpass.conf
+else
+  sudo touch /home/$usuarioActual/dbpass.conf
+  sudo echo $dbpass >> /home/$usuarioActual/dbpass.conf
+fi
 sudo mysql_secure_installation
 echo "#########################################################################"
 echo "######   Installing PHP"
