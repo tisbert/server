@@ -181,7 +181,7 @@ select yn in "Yes" "No"; do
 done
 echo ""
 echo "#########################################################################"
-echo "######   Completing installation...
+echo "######   Completing installation..."
 echo "#########################################################################"
 echo "procesing..."
 sudo chown apache:apache /etc/extra/full_php_browscap.ini
