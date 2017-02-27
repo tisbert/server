@@ -3,7 +3,7 @@ echo "/////////////////// Starting script, waiting please /////////////////////"
 echo "/////////////////////////////////////////////////////////////////////////"
 echo ""
 usuarioActual=$(whoami)
-sudo yum -y -q --skip-broken remove mariadb* httpd* php*
+sudo yum -y -q --skip-broken remove mariadb* httpd* php* mysql*
 echo ""
 echo "#########################################################################"
 echo "######   Checking SElinux"
