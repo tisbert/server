@@ -3,7 +3,7 @@ echo "/////////////////// Starting script, waiting please /////////////////////"
 echo "/////////////////////////////////////////////////////////////////////////"
 echo ""
 usuarioActual=$(whoami)
-sudo yum -y -q --skip-broken remove mariadb*
+sudo yum -y -q --skip-broken remove mariadb* httpd* php*
 echo ""
 echo "#########################################################################"
 echo "######   Checking SElinux"
@@ -194,7 +194,7 @@ echo ""
 echo "#########################################################################"
 echo "######   What version do you want to install from YetiForceCRM?"
 echo "#########################################################################"
-select yn in "Stable" "Developer"; do
+select yn in "Stable" "Developer" "Nothing"; do
   case $yn in
     Stable )
     echo "procesing..."
@@ -205,6 +205,8 @@ select yn in "Stable" "Developer"; do
     echo "procesing..."
     sudo git clone -b developer https://github.com/YetiForceCompany/YetiForceCRM.git /var/www/html/
     sudo chown -hR apache:apache /var/www/html/
+    break;;
+    Nothing )
     break;;
   esac
 done
