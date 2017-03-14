@@ -143,6 +143,9 @@ sudo sed -i 's/;browscap = extra\/browscap.ini/browscap = \/etc\/extra\/full_php
 sudo sed -i 's/session.gc_divisor = .*/session.gc_divisor = 500/g' '/etc/php.ini'
 sudo sed -i 's/session.gc_maxlifetime = .*/session.gc_maxlifetime = 86400/g' '/etc/php.ini'
 sudo sed -i 's/;mbstring.func_overload = .*/mbstring.func_overload = 0/g' '/etc/php.ini'
+
+sudo sed -i 's/;cgi.fix_pathinfo=.*/cgi.fix_pathinfo=0/g' '/etc/php.ini'
+sed -i "s/;cgi.fix_pathinfo=1/cgi.fix_pathinfo=0/" 
 if [ $apacheTLS == "activate" ];then
   sudo sed -i 's/;session.cookie_secure =/session.cookie_secure = 1/g' '/etc/php.ini'
 fi
