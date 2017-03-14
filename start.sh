@@ -116,7 +116,7 @@ echo "#########################################################################"
 echo "######   Installing PHP"
 echo "#########################################################################"
 echo "procesing..."
-sudo yum -y -q --skip-broken install php56u php56u-pdo php56u-dba php56u-gd php56u-imap php56u-ldap php56u-xml php56u-intl php56u-soap php56u-mbstring php56u-pear php56u-mysql php56u-mysqlnd php56u-opcache php56u-fpm-httpd php56u-suhosin php56u-ioncube-loader php56u-mcrypt php56u-pecl-apcu php56u-bcmath php56u-tidy
+sudo yum -y -q --skip-broken install php56u php56u-pdo php56u-dba php56u-gd php56u-imap php56u-ldap php56u-xml php56u-intl php56u-soap php56u-mbstring php56u-pear php56u-mysql php56u-mysqlnd php56u-opcache php56u-fpm-httpd php56u-suhosin php56u-ioncube-loader php56u-mcrypt php56u-pecl-apcu php56u-bcmath php56u-tidy php56u-dbg php56-odbc
 sudo sed -i 's/short_open_tag = .*/short_open_tag = On/g' '/etc/php.ini'
 sudo sed -i 's/output_buffering = .*/output_buffering = On/g' '/etc/php.ini'
 sudo sed -i 's/serialize_precision = .*/serialize_precision = -1/g' '/etc/php.ini'
@@ -145,9 +145,8 @@ sudo sed -i 's/session.gc_maxlifetime = .*/session.gc_maxlifetime = 86400/g' '/e
 sudo sed -i 's/;mbstring.func_overload = .*/mbstring.func_overload = 0/g' '/etc/php.ini'
 
 #sudo sed -i 's/;cgi.fix_pathinfo=.*/cgi.fix_pathinfo=0/g' '/etc/php.ini'
-sed -i "s/;cgi.fix_pathinfo=1/cgi.fix_pathinfo=0/" 
 if [ $apacheTLS == "activate" ];then
-  sudo sed -i 's/;session.cookie_secure =/session.cookie_secure = 1/g' '/etc/php.ini'
+  #sudo sed -i 's/;session.cookie_secure =/session.cookie_secure = 1/g' '/etc/php.ini'
 fi
 
 echo "#########################################################################"
