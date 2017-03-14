@@ -58,8 +58,8 @@ echo "#########################################################################"
 echo "######   Installing APACHE"
 echo "#########################################################################"
 echo "procesing..."
-#sudo yum -y install httpd --skip-broken
-sudo yum -y -q --skip-broken install httpd24u httpd24u-tools
+sudo yum -y -q --skip-broken install httpd httpd-tools
+#sudo yum -y -q --skip-broken install httpd24u httpd24u-tools
 sudo systemctl enable httpd.service
 sudo systemctl start httpd.service
 sudo rm -Rf /etc/httpd/conf.d/welcome.conf
@@ -73,12 +73,13 @@ select yn in "Yes" "No"; do
   case $yn in
     Yes )
     echo "procesing..."
-    sudo yum -y -q --skip-broken install httpd24u-mod_security2 httpd24u-mod_ssl
+    sudo yum -y -q --skip-broken install mod_ssl
+    #sudo yum -y -q --skip-broken install httpd24u-mod_security2 httpd24u-mod_ssl
     #https://mozilla.github.io/server-side-tls/ssl-config-generator/
     sudo sed -i 's/SSLProtocol all -SSLv2/SSLProtocol all -SSLv2 -TLSv1 -TLSv1.1/g' '/etc/httpd/conf.d/ssl.conf'
     sudo sed -i 's/SSLCipherSuite HIGH:MEDIUM:!aNULL:!MD5/SSLCipherSuite ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305:ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-SHA384:ECDHE-RSA-AES256-SHA384:ECDHE-ECDSA-AES128-SHA256:ECDHE-RSA-AES128-SHA256/g' '/etc/httpd/conf.d/ssl.conf'
     sudo sed -i 's/#SSLHonorCipherOrder on/SSLHonorCipherOrder on/g' '/etc/httpd/conf.d/ssl.conf'
-    sudo sed -i 's/;session.cookie_secure =/session.cookie_secure = 1/g' '/etc/php.ini'
+    apacheTLS="activate"
     break;;
     No ) break;;
   esac
@@ -116,32 +117,36 @@ echo "######   Installing PHP"
 echo "#########################################################################"
 echo "procesing..."
 sudo yum -y -q --skip-broken install php56u php56u-pdo php56u-dba php56u-gd php56u-imap php56u-ldap php56u-xml php56u-intl php56u-soap php56u-mbstring php56u-pear php56u-mysql php56u-mysqlnd php56u-opcache php56u-fpm-httpd php56u-suhosin php56u-ioncube-loader php56u-mcrypt php56u-pecl-apcu php56u-bcmath php56u-tidy
-sudo sed -i 's/short_open_tag = Off/short_open_tag = On/g' '/etc/php.ini'
-sudo sed -i 's/output_buffering = 4096/output_buffering = On/g' '/etc/php.ini'
-sudo sed -i 's/serialize_precision = 17/serialize_precision = -1/g' '/etc/php.ini'
-sudo sed -i 's/expose_php = On/expose_php = Off/g' '/etc/php.ini'
-sudo sed -i 's/max_execution_time = 30/max_execution_time = 3600/g' '/etc/php.ini'
-sudo sed -i 's/max_input_time = 60/max_input_time = 3600/g' '/etc/php.ini'
-sudo sed -i 's/; max_input_vars = 1000/max_input_vars = 10000/g' '/etc/php.ini'
-sudo sed -i 's/memory_limit = 128M/memory_limit = 1024M/g' '/etc/php.ini'
-sudo sed -i 's/error_reporting = E_ALL \& \~E_DEPRECATED \& \~E_STRICT/error_reporting = E_COMPILE_ERROR\|E_RECOVERABLE_ERROR\|E_ERROR\|E_CORE_ERROR/g' '/etc/php.ini'
-sudo sed -i 's/log_errors = On/log_errors = Off/g' '/etc/php.ini'
-sudo sed -i 's/log_errors_max_len = 1024/log_errors_max_len = 0/g' '/etc/php.ini'
-sudo sed -i 's/report_memleaks = On/report_memleaks = Off/g' '/etc/php.ini'
-sudo sed -i 's/html_errors = On/html_errors = Off/g' '/etc/php.ini'
+sudo sed -i 's/short_open_tag = .*/short_open_tag = On/g' '/etc/php.ini'
+sudo sed -i 's/output_buffering = .*/output_buffering = On/g' '/etc/php.ini'
+sudo sed -i 's/serialize_precision = .*/serialize_precision = -1/g' '/etc/php.ini'
+sudo sed -i 's/expose_php = .*/expose_php = Off/g' '/etc/php.ini'
+sudo sed -i 's/max_execution_time = .*/max_execution_time = 3600/g' '/etc/php.ini'
+sudo sed -i 's/max_input_time = .*/max_input_time = 3600/g' '/etc/php.ini'
+sudo sed -i 's/; max_input_vars = .*/max_input_vars = 10000/g' '/etc/php.ini'
+sudo sed -i 's/memory_limit = .*/memory_limit = 1024M/g' '/etc/php.ini'
+sudo sed -i 's/error_reporting = .*/error_reporting = 337 #5111/g' '/etc/php.ini'
+sudo sed -i 's/log_errors = .*/log_errors = Off/g' '/etc/php.ini'
+sudo sed -i 's/log_errors_max_len = .*/log_errors_max_len = 0/g' '/etc/php.ini'
+sudo sed -i 's/report_memleaks = .*/report_memleaks = Off/g' '/etc/php.ini'
+sudo sed -i 's/html_errors = .*/html_errors = Off/g' '/etc/php.ini'
 sudo sed -i 's/;error_log = syslog/error_log = \/var\/log\/php-fpm\/php_error_log/g' '/etc/php.ini'
-sudo sed -i 's/post_max_size = 8M/post_max_size = 256M/g' '/etc/php.ini'
-sudo sed -i 's/;always_populate_raw_post_data = -1/always_populate_raw_post_data = -1/g' '/etc/php.ini'
-sudo sed -i 's/upload_max_filesize = 2M/upload_max_filesize = 128M/g' '/etc/php.ini'
-sudo sed -i 's/default_socket_timeout = 60/default_socket_timeout = 600/g' '/etc/php.ini'
+sudo sed -i 's/post_max_size = .*/post_max_size = 256M/g' '/etc/php.ini'
+sudo sed -i 's/;always_populate_raw_post_data = .*/always_populate_raw_post_data = -1/g' '/etc/php.ini'
+sudo sed -i 's/upload_max_filesize = .*/upload_max_filesize = 128M/g' '/etc/php.ini'
+sudo sed -i 's/default_socket_timeout = .*/default_socket_timeout = 600/g' '/etc/php.ini'
 sudo sed -i 's/;date.timezone =/date.timezone = Atlantic\/Canary/g' '/etc/php.ini'
-sudo sed -i 's/;date.default_latitude = 31.7667/date.default_latitude = 28.4716/g' '/etc/php.ini'
-sudo sed -i 's/;date.default_longitude = 35.2333/date.default_longitude = -16.2472/g' '/etc/php.ini'
-sudo sed -i 's/mysql.connect_timeout = 60/mysql.connect_timeout = 600/g' '/etc/php.ini'
+sudo sed -i 's/;date.default_latitude = .*/date.default_latitude = 28.4716/g' '/etc/php.ini'
+sudo sed -i 's/;date.default_longitude = .*/date.default_longitude = -16.2472/g' '/etc/php.ini'
+sudo sed -i 's/mysql.connect_timeout = .*/mysql.connect_timeout = 600/g' '/etc/php.ini'
 sudo sed -i 's/;browscap = extra\/browscap.ini/browscap = \/etc\/extra\/full_php_browscap.ini/g' '/etc/php.ini'
-sudo sed -i 's/session.gc_divisor = 1000/session.gc_divisor = 500/g' '/etc/php.ini'
-sudo sed -i 's/session.gc_maxlifetime = 1440/session.gc_maxlifetime = 86400/g' '/etc/php.ini'
-sudo sed -i 's/;mbstring.func_overload = 0/mbstring.func_overload = 0/g' '/etc/php.ini'
+sudo sed -i 's/session.gc_divisor = .*/session.gc_divisor = 500/g' '/etc/php.ini'
+sudo sed -i 's/session.gc_maxlifetime = .*/session.gc_maxlifetime = 86400/g' '/etc/php.ini'
+sudo sed -i 's/;mbstring.func_overload = .*/mbstring.func_overload = 0/g' '/etc/php.ini'
+if [ $apacheTLS == "activate" ];then
+  sudo sed -i 's/;session.cookie_secure =/session.cookie_secure = 1/g' '/etc/php.ini'
+fi
+
 echo "#########################################################################"
 echo "######   Installing librerias de PEAR"
 echo "#########################################################################"
