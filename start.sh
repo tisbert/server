@@ -72,16 +72,18 @@ echo "#########################################################################"
 select yn in "Yes" "No"; do
   case $yn in
     Yes )
-    echo "procesing..."
-    sudo yum -y -q --skip-broken install mod_ssl
-    #sudo yum -y -q --skip-broken install httpd24u-mod_security2 httpd24u-mod_ssl
-    #https://mozilla.github.io/server-side-tls/ssl-config-generator/
-    sudo sed -i 's/SSLProtocol all -SSLv2/SSLProtocol all -SSLv2 -TLSv1 -TLSv1.1/g' '/etc/httpd/conf.d/ssl.conf'
-    sudo sed -i 's/SSLCipherSuite HIGH:MEDIUM:!aNULL:!MD5/SSLCipherSuite ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305:ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-SHA384:ECDHE-RSA-AES256-SHA384:ECDHE-ECDSA-AES128-SHA256:ECDHE-RSA-AES128-SHA256/g' '/etc/httpd/conf.d/ssl.conf'
-    sudo sed -i 's/#SSLHonorCipherOrder on/SSLHonorCipherOrder on/g' '/etc/httpd/conf.d/ssl.conf'
-    apacheTLS="activate"
-    break;;
-    No ) break;;
+      echo "procesing..."
+      sudo yum -y -q --skip-broken install mod_ssl
+      #sudo yum -y -q --skip-broken install httpd24u-mod_security2 httpd24u-mod_ssl
+      #https://mozilla.github.io/server-side-tls/ssl-config-generator/
+      sudo sed -i 's/SSLProtocol all -SSLv2/SSLProtocol all -SSLv2 -TLSv1 -TLSv1.1/g' '/etc/httpd/conf.d/ssl.conf'
+      sudo sed -i 's/SSLCipherSuite HIGH:MEDIUM:!aNULL:!MD5/SSLCipherSuite ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305:ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-SHA384:ECDHE-RSA-AES256-SHA384:ECDHE-ECDSA-AES128-SHA256:ECDHE-RSA-AES128-SHA256/g' '/etc/httpd/conf.d/ssl.conf'
+      sudo sed -i 's/#SSLHonorCipherOrder on/SSLHonorCipherOrder on/g' '/etc/httpd/conf.d/ssl.conf'
+      apacheTLS="activate"
+      break;;
+    No ) 
+      apacheTLS="none"
+      break;;
   esac
 done
 echo ""
@@ -145,9 +147,9 @@ sudo sed -i 's/session.gc_maxlifetime = .*/session.gc_maxlifetime = 86400/g' '/e
 sudo sed -i 's/;mbstring.func_overload = .*/mbstring.func_overload = 0/g' '/etc/php.ini'
 
 #sudo sed -i 's/;cgi.fix_pathinfo=.*/cgi.fix_pathinfo=0/g' '/etc/php.ini'
-#if [ $apacheTLS == "activate" ];then
-  #sudo sed -i 's/;session.cookie_secure =/session.cookie_secure = 1/g' '/etc/php.ini'
-#fi
+if [ $apacheTLS == "activate" ];then
+  sudo sed -i 's/;session.cookie_secure =/session.cookie_secure = 1/g' '/etc/php.ini'
+fi
 
 echo "#########################################################################"
 echo "######   Installing librerias de PEAR"
@@ -165,26 +167,26 @@ echo "#########################################################################"
 select yn in "Yes" "No"; do
   case $yn in
     Yes )
-    echo "procesing..."
-    sudo systemctl mask firewalld
-    sudo systemctl stop firewalld
-    sudo yum -y -q remove firewalld
-    sudo yum -y -q --skip-broken install iptables-services
-    sudo systemctl enable iptables
-    sudo service iptables stop
-    sudo service iptables start
-    break;;
+      echo "procesing..."
+      sudo systemctl mask firewalld
+      sudo systemctl stop firewalld
+      sudo yum -y -q remove firewalld
+      sudo yum -y -q --skip-broken install iptables-services
+      sudo systemctl enable iptables
+      sudo service iptables stop
+      sudo service iptables start
+      break;;
     No )
-    echo "procesing..."
-    sudo firewall-cmd --permanent --add-port=80/tcp
-    sudo firewall-cmd --permanent --add-service http
-    sudo firewall-cmd --permanent --add-port=443/tcp
-    sudo firewall-cmd --permanent --add-service https
-    sudo firewall-cmd --permanent --add-port=21/tcp
-    sudo firewall-cmd --permanent --add-service=ftp
-    sudo firewall-cmd --permanent --add-port=10000/tcp
-    sudo systemctl restart firewalld.service
-    break;;
+      echo "procesing..."
+      sudo firewall-cmd --permanent --add-port=80/tcp
+      sudo firewall-cmd --permanent --add-service http
+      sudo firewall-cmd --permanent --add-port=443/tcp
+      sudo firewall-cmd --permanent --add-service https
+      sudo firewall-cmd --permanent --add-port=21/tcp
+      sudo firewall-cmd --permanent --add-service=ftp
+      sudo firewall-cmd --permanent --add-port=10000/tcp
+      sudo systemctl restart firewalld.service
+      break;;
   esac
 done
 echo ""
@@ -205,17 +207,17 @@ echo "#########################################################################"
 select yn in "Stable" "Developer" "Nothing"; do
   case $yn in
     Stable )
-    echo "procesing..."
-    sudo git clone -b stable https://github.com/YetiForceCompany/YetiForceCRM.git /var/www/html/
-    sudo chown -hR apache:apache /var/www/html/
-    break;;
+      echo "procesing..."
+      sudo git clone -b stable https://github.com/YetiForceCompany/YetiForceCRM.git /var/www/html/
+      sudo chown -hR apache:apache /var/www/html/
+      break;;
     Developer )
-    echo "procesing..."
-    sudo git clone -b developer https://github.com/YetiForceCompany/YetiForceCRM.git /var/www/html/
-    sudo chown -hR apache:apache /var/www/html/
-    break;;
+      echo "procesing..."
+      sudo git clone -b developer https://github.com/YetiForceCompany/YetiForceCRM.git /var/www/html/
+      sudo chown -hR apache:apache /var/www/html/
+      break;;
     Nothing )
-    break;;
+      break;;
   esac
 done
 echo "Deleting unnecessary files in: "$usuarioActual
